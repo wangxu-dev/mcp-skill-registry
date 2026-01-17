@@ -1,0 +1,11 @@
+{
+  "transport": "stdio",
+  "type": "",
+  "url": "",
+  "command": "npx",
+  "args": [
+    "-y",
+    "@upstash/context7-mcp"
+  ],
+  "env": null
+}

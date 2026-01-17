@@ -1,0 +1,8 @@
+{
+  "$schema": "./schema/sources.skill.schema.json",
+  "sources": [
+    {
+      "repo": "https://github.com/vercel-labs/agent-skills"
+    }
+  ]
+}

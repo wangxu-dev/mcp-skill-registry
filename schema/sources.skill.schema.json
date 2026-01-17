@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Skill Sources",
+  "type": "object",
+  "required": [
+    "sources"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "repo"
+        ],
+        "properties": {
+          "repo": {
+            "type": "string"
+          },
+          "branch": {
+            "type": "string"
+          },
+          "exclude": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

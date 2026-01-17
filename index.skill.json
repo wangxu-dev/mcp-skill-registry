@@ -1,0 +1,26 @@
+{
+  "generatedAt": "2026-01-17T10:06:49Z",
+  "skills": [
+    {
+      "name": "react-best-practices",
+      "path": "skill/react-best-practices",
+      "repo": "https://github.com/vercel-labs/agent-skills",
+      "head": "ba46938889d4e58635362fb8f618e1178ac3ec46",
+      "updatedAt": "2026-01-17T10:06:49Z"
+    },
+    {
+      "name": "vercel-deploy-claimable",
+      "path": "skill/vercel-deploy-claimable",
+      "repo": "https://github.com/vercel-labs/agent-skills",
+      "head": "ba46938889d4e58635362fb8f618e1178ac3ec46",
+      "updatedAt": "2026-01-17T10:06:49Z"
+    },
+    {
+      "name": "web-design-guidelines",
+      "path": "skill/web-design-guidelines",
+      "repo": "https://github.com/vercel-labs/agent-skills",
+      "head": "ba46938889d4e58635362fb8f618e1178ac3ec46",
+      "updatedAt": "2026-01-17T10:06:49Z"
+    }
+  ]
+}
