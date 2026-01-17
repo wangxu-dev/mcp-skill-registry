@@ -3,6 +3,9 @@
   "sources": [
     {
       "repo": "https://github.com/vercel-labs/agent-skills"
+    },
+    {
+      "repo": "https://github.com/anthropics/claude-code.git"
     }
   ]
 }

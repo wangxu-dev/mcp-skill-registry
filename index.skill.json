@@ -1,6 +1,76 @@
 {
-  "generatedAt": "2026-01-17T10:06:49Z",
+  "generatedAt": "2026-01-17T10:10:31Z",
   "skills": [
+    {
+      "name": "agent-development",
+      "path": "skill/agent-development",
+      "repo": "https://github.com/anthropics/claude-code.git",
+      "head": "923d72749265a208dec86247651b8df31fc92477",
+      "updatedAt": "2026-01-17T10:10:31Z"
+    },
+    {
+      "name": "claude-opus-4-5-migration",
+      "path": "skill/claude-opus-4-5-migration",
+      "repo": "https://github.com/anthropics/claude-code.git",
+      "head": "923d72749265a208dec86247651b8df31fc92477",
+      "updatedAt": "2026-01-17T10:10:31Z"
+    },
+    {
+      "name": "command-development",
+      "path": "skill/command-development",
+      "repo": "https://github.com/anthropics/claude-code.git",
+      "head": "923d72749265a208dec86247651b8df31fc92477",
+      "updatedAt": "2026-01-17T10:10:31Z"
+    },
+    {
+      "name": "frontend-design",
+      "path": "skill/frontend-design",
+      "repo": "https://github.com/anthropics/claude-code.git",
+      "head": "923d72749265a208dec86247651b8df31fc92477",
+      "updatedAt": "2026-01-17T10:10:31Z"
+    },
+    {
+      "name": "hook-development",
+      "path": "skill/hook-development",
+      "repo": "https://github.com/anthropics/claude-code.git",
+      "head": "923d72749265a208dec86247651b8df31fc92477",
+      "updatedAt": "2026-01-17T10:10:31Z"
+    },
+    {
+      "name": "mcp-integration",
+      "path": "skill/mcp-integration",
+      "repo": "https://github.com/anthropics/claude-code.git",
+      "head": "923d72749265a208dec86247651b8df31fc92477",
+      "updatedAt": "2026-01-17T10:10:31Z"
+    },
+    {
+      "name": "plugin-settings",
+      "path": "skill/plugin-settings",
+      "repo": "https://github.com/anthropics/claude-code.git",
+      "head": "923d72749265a208dec86247651b8df31fc92477",
+      "updatedAt": "2026-01-17T10:10:31Z"
+    },
+    {
+      "name": "plugin-structure",
+      "path": "skill/plugin-structure",
+      "repo": "https://github.com/anthropics/claude-code.git",
+      "head": "923d72749265a208dec86247651b8df31fc92477",
+      "updatedAt": "2026-01-17T10:10:31Z"
+    },
+    {
+      "name": "skill-development",
+      "path": "skill/skill-development",
+      "repo": "https://github.com/anthropics/claude-code.git",
+      "head": "923d72749265a208dec86247651b8df31fc92477",
+      "updatedAt": "2026-01-17T10:10:31Z"
+    },
+    {
+      "name": "writing-rules",
+      "path": "skill/writing-rules",
+      "repo": "https://github.com/anthropics/claude-code.git",
+      "head": "923d72749265a208dec86247651b8df31fc92477",
+      "updatedAt": "2026-01-17T10:10:31Z"
+    },
     {
       "name": "react-best-practices",
       "path": "skill/react-best-practices",
