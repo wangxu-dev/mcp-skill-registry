@@ -1,0 +1,10 @@
+{
+  "version": "0.0.1",
+  "organization": "wangxu <wx@aurise.dev>",
+  "date": "January 2026",
+  "abstract": "Work session continuity management for AI assistants. Preserves progress, context, and TODOs across conversations to minimize friction between work sessions. Uses explicit save/restore commands for clarity. Designed for developers who work in short, focused sessions and need quick context recovery.",
+  "references": [
+    "https://github.com/anthropics/claude-code",
+    "https://github.com/wangxu-dev"
+  ]
+}

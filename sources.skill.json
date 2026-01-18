@@ -6,6 +6,9 @@
     },
     {
       "repo": "https://github.com/anthropics/claude-code.git"
+    },
+    {
+      "repo": "https://github.com/wangxu-dev/skills"
     }
   ]
 }

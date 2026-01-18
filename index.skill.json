@@ -1,96 +1,103 @@
 {
-  "generatedAt": "2026-01-17T10:10:31Z",
+  "generatedAt": "2026-01-18T12:27:40Z",
   "skills": [
     {
       "name": "agent-development",
       "path": "skill/agent-development",
       "repo": "https://github.com/anthropics/claude-code.git",
-      "head": "923d72749265a208dec86247651b8df31fc92477",
-      "updatedAt": "2026-01-17T10:10:31Z"
+      "head": "74cc597eb5c1a604e955ce97e7e3b82524f1062c",
+      "updatedAt": "2026-01-18T12:27:40Z"
     },
     {
       "name": "claude-opus-4-5-migration",
       "path": "skill/claude-opus-4-5-migration",
       "repo": "https://github.com/anthropics/claude-code.git",
-      "head": "923d72749265a208dec86247651b8df31fc92477",
-      "updatedAt": "2026-01-17T10:10:31Z"
+      "head": "74cc597eb5c1a604e955ce97e7e3b82524f1062c",
+      "updatedAt": "2026-01-18T12:27:40Z"
     },
     {
       "name": "command-development",
       "path": "skill/command-development",
       "repo": "https://github.com/anthropics/claude-code.git",
-      "head": "923d72749265a208dec86247651b8df31fc92477",
-      "updatedAt": "2026-01-17T10:10:31Z"
+      "head": "74cc597eb5c1a604e955ce97e7e3b82524f1062c",
+      "updatedAt": "2026-01-18T12:27:40Z"
     },
     {
       "name": "frontend-design",
       "path": "skill/frontend-design",
       "repo": "https://github.com/anthropics/claude-code.git",
-      "head": "923d72749265a208dec86247651b8df31fc92477",
-      "updatedAt": "2026-01-17T10:10:31Z"
+      "head": "74cc597eb5c1a604e955ce97e7e3b82524f1062c",
+      "updatedAt": "2026-01-18T12:27:40Z"
     },
     {
       "name": "hook-development",
       "path": "skill/hook-development",
       "repo": "https://github.com/anthropics/claude-code.git",
-      "head": "923d72749265a208dec86247651b8df31fc92477",
-      "updatedAt": "2026-01-17T10:10:31Z"
+      "head": "74cc597eb5c1a604e955ce97e7e3b82524f1062c",
+      "updatedAt": "2026-01-18T12:27:40Z"
     },
     {
       "name": "mcp-integration",
       "path": "skill/mcp-integration",
       "repo": "https://github.com/anthropics/claude-code.git",
-      "head": "923d72749265a208dec86247651b8df31fc92477",
-      "updatedAt": "2026-01-17T10:10:31Z"
+      "head": "74cc597eb5c1a604e955ce97e7e3b82524f1062c",
+      "updatedAt": "2026-01-18T12:27:40Z"
     },
     {
       "name": "plugin-settings",
       "path": "skill/plugin-settings",
       "repo": "https://github.com/anthropics/claude-code.git",
-      "head": "923d72749265a208dec86247651b8df31fc92477",
-      "updatedAt": "2026-01-17T10:10:31Z"
+      "head": "74cc597eb5c1a604e955ce97e7e3b82524f1062c",
+      "updatedAt": "2026-01-18T12:27:40Z"
     },
     {
       "name": "plugin-structure",
       "path": "skill/plugin-structure",
       "repo": "https://github.com/anthropics/claude-code.git",
-      "head": "923d72749265a208dec86247651b8df31fc92477",
-      "updatedAt": "2026-01-17T10:10:31Z"
+      "head": "74cc597eb5c1a604e955ce97e7e3b82524f1062c",
+      "updatedAt": "2026-01-18T12:27:40Z"
     },
     {
       "name": "skill-development",
       "path": "skill/skill-development",
       "repo": "https://github.com/anthropics/claude-code.git",
-      "head": "923d72749265a208dec86247651b8df31fc92477",
-      "updatedAt": "2026-01-17T10:10:31Z"
+      "head": "74cc597eb5c1a604e955ce97e7e3b82524f1062c",
+      "updatedAt": "2026-01-18T12:27:40Z"
     },
     {
       "name": "writing-rules",
       "path": "skill/writing-rules",
       "repo": "https://github.com/anthropics/claude-code.git",
-      "head": "923d72749265a208dec86247651b8df31fc92477",
-      "updatedAt": "2026-01-17T10:10:31Z"
+      "head": "74cc597eb5c1a604e955ce97e7e3b82524f1062c",
+      "updatedAt": "2026-01-18T12:27:40Z"
     },
     {
       "name": "react-best-practices",
       "path": "skill/react-best-practices",
       "repo": "https://github.com/vercel-labs/agent-skills",
-      "head": "ba46938889d4e58635362fb8f618e1178ac3ec46",
-      "updatedAt": "2026-01-17T10:06:49Z"
+      "head": "ac6a79af08f6d32c34ee03c829824990f3de0a6d",
+      "updatedAt": "2026-01-18T12:27:40Z"
     },
     {
       "name": "vercel-deploy-claimable",
       "path": "skill/vercel-deploy-claimable",
       "repo": "https://github.com/vercel-labs/agent-skills",
-      "head": "ba46938889d4e58635362fb8f618e1178ac3ec46",
-      "updatedAt": "2026-01-17T10:06:49Z"
+      "head": "ac6a79af08f6d32c34ee03c829824990f3de0a6d",
+      "updatedAt": "2026-01-18T12:27:40Z"
     },
     {
       "name": "web-design-guidelines",
       "path": "skill/web-design-guidelines",
       "repo": "https://github.com/vercel-labs/agent-skills",
-      "head": "ba46938889d4e58635362fb8f618e1178ac3ec46",
-      "updatedAt": "2026-01-17T10:06:49Z"
+      "head": "ac6a79af08f6d32c34ee03c829824990f3de0a6d",
+      "updatedAt": "2026-01-18T12:27:40Z"
+    },
+    {
+      "name": "work-session",
+      "path": "skill/work-session",
+      "repo": "https://github.com/wangxu-dev/skills",
+      "head": "7aac9f7d0830e10906fec37a6c7bb2f145dd5a5c",
+      "updatedAt": "2026-01-18T12:27:40Z"
     }
   ]
 }
