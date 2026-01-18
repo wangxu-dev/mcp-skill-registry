@@ -6,6 +6,7 @@ Minimal registry repository for skills.
 - Syncs from a list of source repos
 - Scans for folders containing `SKILL.md`
 - Mirrors each skill folder into `skill/`
+- Writes `skill.meta.json` for registry-managed metadata (checkedAt/updatedAt/head)
 - Generates `index.skill.json` with source repo/path/head/updatedAt
 
 ## Layout

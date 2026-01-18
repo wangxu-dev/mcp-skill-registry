@@ -45,6 +45,15 @@ type foundSkill struct {
 	SourcePath string
 }
 
+type skillMeta struct {
+	Name        string `json:"name"`
+	Description string `json:"description,omitempty"`
+	Version     string `json:"version,omitempty"`
+	Head        string `json:"head,omitempty"`
+	UpdatedAt   string `json:"updatedAt,omitempty"`
+	CheckedAt   string `json:"checkedAt,omitempty"`
+}
+
 var defaultExclude = []string{
 	"node_modules",
 	"dist",
@@ -137,6 +146,18 @@ func run(sourcesPath, indexPath, sourcesDir string, keepSources bool) error {
 			for _, s := range existingByRepo[repo] {
 				updatedSkills = append(updatedSkills, s)
 				pathOwners[destPathForName(s.Name)] = repo
+				meta := skillMeta{
+					Name:      s.Name,
+					Head:      s.Head,
+					UpdatedAt: s.UpdatedAt,
+					CheckedAt: now,
+				}
+				if err := enrichMetaFromSkill(destPathForName(s.Name), &meta); err != nil {
+					return err
+				}
+				if err := writeSkillMeta(destPathForName(s.Name), meta); err != nil {
+					return err
+				}
 			}
 			continue
 		}
@@ -173,13 +194,26 @@ func run(sourcesPath, indexPath, sourcesDir string, keepSources bool) error {
 		for _, rs := range repoSkills {
 			destPath := destPathForName(rs.Name)
 			pathOwners[destPath] = repo
-			updatedSkills = append(updatedSkills, skill{
+			entry := skill{
 				Name:      rs.Name,
 				Path:      rs.SourcePath,
 				Repo:      repo,
 				Head:      actualHead,
 				UpdatedAt: now,
-			})
+			}
+			updatedSkills = append(updatedSkills, entry)
+			meta := skillMeta{
+				Name:      rs.Name,
+				Head:      entry.Head,
+				UpdatedAt: entry.UpdatedAt,
+				CheckedAt: now,
+			}
+			if err := enrichMetaFromSkill(destPathForName(rs.Name), &meta); err != nil {
+				return err
+			}
+			if err := writeSkillMeta(destPathForName(rs.Name), meta); err != nil {
+				return err
+			}
 		}
 
 		if !keepSources {
@@ -433,6 +467,81 @@ func mirrorSkills(skillRoot, repoDir string, entries []foundSkill) error {
 		}
 	}
 	return nil
+}
+
+func writeSkillMeta(skillPath string, meta skillMeta) error {
+	data, err := json.MarshalIndent(meta, "", "  ")
+	if err != nil {
+		return err
+	}
+	data = append(data, '\n')
+	return os.WriteFile(filepath.Join(skillPath, "skill.meta.json"), data, 0644)
+}
+
+func enrichMetaFromSkill(skillPath string, meta *skillMeta) error {
+	version, description, err := readSkillFrontmatter(filepath.Join(skillPath, "SKILL.md"))
+	if err != nil && !os.IsNotExist(err) {
+		return err
+	}
+	meta.Version = version
+	meta.Description = description
+	return nil
+}
+
+func readSkillFrontmatter(path string) (string, string, error) {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return "", "", err
+	}
+	lines := strings.Split(string(data), "\n")
+	var body []string
+	if len(lines) > 0 && strings.TrimSpace(lines[0]) == "---" {
+		for i := 1; i < len(lines); i++ {
+			if strings.TrimSpace(lines[i]) == "---" {
+				body = lines[1:i]
+				break
+			}
+		}
+	}
+	if body == nil {
+		limit := 40
+		if len(lines) < limit {
+			limit = len(lines)
+		}
+		body = lines[:limit]
+	}
+
+	var (
+		version     string
+		description string
+	)
+	for _, line := range body {
+		trimmed := strings.TrimSpace(line)
+		if trimmed == "" {
+			continue
+		}
+		if strings.HasPrefix(strings.ToLower(trimmed), "description:") && description == "" {
+			value := strings.TrimSpace(trimmed[len("description:"):])
+			description = trimQuoted(value)
+			continue
+		}
+		if strings.HasPrefix(strings.ToLower(trimmed), "version:") && version == "" {
+			value := strings.TrimSpace(trimmed[len("version:"):])
+			version = trimQuoted(value)
+		}
+	}
+
+	return version, description, nil
+}
+
+func trimQuoted(value string) string {
+	value = strings.TrimSpace(value)
+	if len(value) >= 2 {
+		if (value[0] == '"' && value[len(value)-1] == '"') || (value[0] == '\'' && value[len(value)-1] == '\'') {
+			return value[1 : len(value)-1]
+		}
+	}
+	return value
 }
 
 func copyDir(src, dst string) error {
