@@ -133,12 +133,10 @@ func run(sourcesPath, indexPath, sourcesDir string, keepSources bool) error {
 			return err
 		}
 
-		if existingHead[repo] == head && head != "" {
+		if existingHead[repo] == head && head != "" && !needsSourcePathUpdate(existingByRepo[repo]) {
 			for _, s := range existingByRepo[repo] {
 				updatedSkills = append(updatedSkills, s)
-				if s.Path != "" {
-					pathOwners[s.Path] = repo
-				}
+				pathOwners[destPathForName(s.Name)] = repo
 			}
 			continue
 		}
@@ -158,7 +156,7 @@ func run(sourcesPath, indexPath, sourcesDir string, keepSources bool) error {
 			}
 			seenDest[rs.Name] = true
 
-			destPath := filepath.ToSlash(filepath.Join("skill", rs.Name))
+			destPath := destPathForName(rs.Name)
 			if owner, ok := pathOwners[destPath]; ok && owner != repo {
 				return fmt.Errorf("skill path %q already owned by repo %q", destPath, owner)
 			}
@@ -173,11 +171,11 @@ func run(sourcesPath, indexPath, sourcesDir string, keepSources bool) error {
 		}
 
 		for _, rs := range repoSkills {
-			destPath := filepath.ToSlash(filepath.Join("skill", rs.Name))
+			destPath := destPathForName(rs.Name)
 			pathOwners[destPath] = repo
 			updatedSkills = append(updatedSkills, skill{
 				Name:      rs.Name,
-				Path:      destPath,
+				Path:      rs.SourcePath,
 				Repo:      repo,
 				Head:      actualHead,
 				UpdatedAt: now,
@@ -399,12 +397,12 @@ func repoFolderName(repo string) string {
 
 func removeRepoSkills(entries []skill) error {
 	for _, s := range entries {
-		if s.Path == "" {
+		if s.Name == "" {
 			continue
 		}
-		target, ok := safeSkillPath(s.Path)
+		target, ok := safeSkillPath(destPathForName(s.Name))
 		if !ok {
-			return fmt.Errorf("refusing to remove unexpected path %q", s.Path)
+			return fmt.Errorf("refusing to remove unexpected path for %q", s.Name)
 		}
 		if err := os.RemoveAll(target); err != nil && !os.IsNotExist(err) {
 			return err
@@ -514,4 +512,20 @@ func safeSkillPath(rel string) (string, bool) {
 		return "", false
 	}
 	return clean, true
+}
+
+func destPathForName(name string) string {
+	return filepath.ToSlash(filepath.Join("skill", name))
+}
+
+func needsSourcePathUpdate(entries []skill) bool {
+	for _, entry := range entries {
+		if entry.Name == "" {
+			continue
+		}
+		if entry.Path == destPathForName(entry.Name) {
+			return true
+		}
+	}
+	return false
 }

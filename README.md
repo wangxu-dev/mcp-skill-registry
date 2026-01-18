@@ -6,7 +6,7 @@ Minimal registry repository for skills.
 - Syncs from a list of source repos
 - Scans for folders containing `SKILL.md`
 - Mirrors each skill folder into `skill/`
-- Generates `index.skill.json` with repo/head/updatedAt
+- Generates `index.skill.json` with source repo/path/head/updatedAt
 
 ## Layout
 - `cmd/skill-indexer/` Go updater
@@ -14,6 +14,8 @@ Minimal registry repository for skills.
 - `schema/` JSON Schema for editor validation
 - `skill/` Mirrored skill folders
 - `index.skill.json` Generated index
+  - `repo`/`path` are the source repo/path for traceability
+  - installers fetch from this registry repo and use `skill/<name>`
 
 ## Usage
 
