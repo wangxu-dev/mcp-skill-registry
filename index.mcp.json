@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-01-19T04:25:03Z",
+  "generatedAt": "2026-01-19T04:59:13Z",
   "mcp": [
     {
       "name": "context7",
       "type": "http",
       "description": "Context7 MCP server (hosted).",
       "url": "https://mcp.context7.com/mcp",
-      "updatedAt": "2026-01-19T04:25:03Z",
-      "checkedAt": "2026-01-19T04:25:03Z"
+      "updatedAt": "2026-01-19T04:59:13Z",
+      "checkedAt": "2026-01-19T04:59:13Z"
     },
     {
       "name": "easy-postgres",
@@ -42,15 +42,15 @@
           "name": "MODE",
           "label": "Mode",
           "type": "choice",
-          "default": "readonly",
+          "default": "read",
           "options": [
-            "readonly",
+            "read",
             "write"
           ]
         }
       ],
-      "updatedAt": "2026-01-19T04:25:03Z",
-      "checkedAt": "2026-01-19T04:25:03Z"
+      "updatedAt": "2026-01-19T04:59:13Z",
+      "checkedAt": "2026-01-19T04:59:13Z"
     }
   ]
 }
