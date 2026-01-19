@@ -33,11 +33,13 @@ type indexFile struct {
 }
 
 type skill struct {
-	Name      string `json:"name"`
-	Path      string `json:"path"`
-	Repo      string `json:"repo"`
-	Head      string `json:"head"`
-	UpdatedAt string `json:"updatedAt"`
+	Name        string `json:"name"`
+	Path        string `json:"path"`
+	Repo        string `json:"repo"`
+	Head        string `json:"head"`
+	UpdatedAt   string `json:"updatedAt"`
+	Version     string `json:"version,omitempty"`
+	Description string `json:"description,omitempty"`
 }
 
 type foundSkill struct {
@@ -144,7 +146,6 @@ func run(sourcesPath, indexPath, sourcesDir string, keepSources bool) error {
 
 		if existingHead[repo] == head && head != "" && !needsSourcePathUpdate(existingByRepo[repo]) {
 			for _, s := range existingByRepo[repo] {
-				updatedSkills = append(updatedSkills, s)
 				pathOwners[destPathForName(s.Name)] = repo
 				meta := skillMeta{
 					Name:      s.Name,
@@ -155,6 +156,9 @@ func run(sourcesPath, indexPath, sourcesDir string, keepSources bool) error {
 				if err := enrichMetaFromSkill(destPathForName(s.Name), &meta); err != nil {
 					return err
 				}
+				s.Version = meta.Version
+				s.Description = meta.Description
+				updatedSkills = append(updatedSkills, s)
 				if err := writeSkillMeta(destPathForName(s.Name), meta); err != nil {
 					return err
 				}
@@ -194,23 +198,25 @@ func run(sourcesPath, indexPath, sourcesDir string, keepSources bool) error {
 		for _, rs := range repoSkills {
 			destPath := destPathForName(rs.Name)
 			pathOwners[destPath] = repo
-			entry := skill{
-				Name:      rs.Name,
-				Path:      rs.SourcePath,
-				Repo:      repo,
-				Head:      actualHead,
-				UpdatedAt: now,
-			}
-			updatedSkills = append(updatedSkills, entry)
 			meta := skillMeta{
 				Name:      rs.Name,
-				Head:      entry.Head,
-				UpdatedAt: entry.UpdatedAt,
+				Head:      actualHead,
+				UpdatedAt: now,
 				CheckedAt: now,
 			}
 			if err := enrichMetaFromSkill(destPathForName(rs.Name), &meta); err != nil {
 				return err
 			}
+			entry := skill{
+				Name:        rs.Name,
+				Path:        rs.SourcePath,
+				Repo:        repo,
+				Head:        actualHead,
+				UpdatedAt:   now,
+				Version:     meta.Version,
+				Description: meta.Description,
+			}
+			updatedSkills = append(updatedSkills, entry)
 			if err := writeSkillMeta(destPathForName(rs.Name), meta); err != nil {
 				return err
 			}
