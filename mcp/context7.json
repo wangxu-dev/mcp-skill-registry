@@ -1,8 +1,0 @@
-{
-  "transport": "http",
-  "type": "",
-  "url": "https://mcp.context7.com/mcp",
-  "command": "",
-  "args": null,
-  "env": null
-}

@@ -1,4 +1,56 @@
 {
-  "generatedAt": "2026-01-18T00:00:00Z",
-  "mcp": []
+  "generatedAt": "2026-01-19T04:25:03Z",
+  "mcp": [
+    {
+      "name": "context7",
+      "type": "http",
+      "description": "Context7 MCP server (hosted).",
+      "url": "https://mcp.context7.com/mcp",
+      "updatedAt": "2026-01-19T04:25:03Z",
+      "checkedAt": "2026-01-19T04:25:03Z"
+    },
+    {
+      "name": "easy-postgres",
+      "type": "stdio",
+      "description": "A simple MCP server to execute SQL against Postgres.",
+      "repo": "https://github.com/perrypixel/Easy-Postgres-MCP",
+      "head": "b0a279b9bcd8b15c51ef8e0b30eed7d8638296c5",
+      "requires": [
+        "node",
+        "npm"
+      ],
+      "install": [
+        "npm install",
+        "npm run build"
+      ],
+      "run": {
+        "command": "node",
+        "args": [
+          "${ROOT}/build/index.js",
+          "${PG_URL}",
+          "${MODE}"
+        ]
+      },
+      "inputs": [
+        {
+          "name": "PG_URL",
+          "label": "Postgres URL",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "MODE",
+          "label": "Mode",
+          "type": "choice",
+          "default": "readonly",
+          "options": [
+            "readonly",
+            "write"
+          ]
+        }
+      ],
+      "updatedAt": "2026-01-19T04:25:03Z",
+      "checkedAt": "2026-01-19T04:25:03Z"
+    }
+  ]
 }
