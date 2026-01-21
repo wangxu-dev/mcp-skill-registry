@@ -1,28 +1,28 @@
 {
-  "generatedAt": "2026-01-20T03:48:54Z",
+  "generatedAt": "2026-01-21T03:48:26Z",
   "skills": [
     {
       "name": "claude-opus-4-5-migration",
       "path": "plugins/claude-opus-4-5-migration/skills/claude-opus-4-5-migration",
       "repo": "https://github.com/anthropics/claude-code.git",
-      "head": "74cc597eb5c1a604e955ce97e7e3b82524f1062c",
-      "updatedAt": "2026-01-18T15:48:16Z",
+      "head": "a6a8045031de9ff3e44683264e2ed6d434a8c0b6",
+      "updatedAt": "2026-01-21T03:48:26Z",
       "description": "Migrate prompts and code from Claude Sonnet 4.0, Sonnet 4.5, or Opus 4.1 to Opus 4.5. Use when the user wants to update their codebase, prompts, or API calls to use Opus 4.5. Handles model string updates and prompt adjustments for known Opus 4.5 behavioral differences. Does NOT migrate Haiku 4.5."
     },
     {
       "name": "frontend-design",
       "path": "plugins/frontend-design/skills/frontend-design",
       "repo": "https://github.com/anthropics/claude-code.git",
-      "head": "74cc597eb5c1a604e955ce97e7e3b82524f1062c",
-      "updatedAt": "2026-01-18T15:48:16Z",
+      "head": "a6a8045031de9ff3e44683264e2ed6d434a8c0b6",
+      "updatedAt": "2026-01-21T03:48:26Z",
       "description": "Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, or applications. Generates creative, polished code that avoids generic AI aesthetics."
     },
     {
       "name": "writing-rules",
       "path": "plugins/hookify/skills/writing-rules",
       "repo": "https://github.com/anthropics/claude-code.git",
-      "head": "74cc597eb5c1a604e955ce97e7e3b82524f1062c",
-      "updatedAt": "2026-01-18T15:48:16Z",
+      "head": "a6a8045031de9ff3e44683264e2ed6d434a8c0b6",
+      "updatedAt": "2026-01-21T03:48:26Z",
       "version": "0.1.0",
       "description": "This skill should be used when the user asks to \"create a hookify rule\", \"write a hook rule\", \"configure hookify\", \"add a hookify rule\", or needs guidance on hookify rule syntax and patterns."
     },
@@ -30,8 +30,8 @@
       "name": "agent-development",
       "path": "plugins/plugin-dev/skills/agent-development",
       "repo": "https://github.com/anthropics/claude-code.git",
-      "head": "74cc597eb5c1a604e955ce97e7e3b82524f1062c",
-      "updatedAt": "2026-01-18T15:48:16Z",
+      "head": "a6a8045031de9ff3e44683264e2ed6d434a8c0b6",
+      "updatedAt": "2026-01-21T03:48:26Z",
       "version": "0.1.0",
       "description": "This skill should be used when the user asks to \"create an agent\", \"add an agent\", \"write a subagent\", \"agent frontmatter\", \"when to use description\", \"agent examples\", \"agent tools\", \"agent colors\", \"autonomous agent\", or needs guidance on agent structure, system prompts, triggering conditions, or agent development best practices for Claude Code plugins."
     },
@@ -39,8 +39,8 @@
       "name": "command-development",
       "path": "plugins/plugin-dev/skills/command-development",
       "repo": "https://github.com/anthropics/claude-code.git",
-      "head": "74cc597eb5c1a604e955ce97e7e3b82524f1062c",
-      "updatedAt": "2026-01-18T15:48:16Z",
+      "head": "a6a8045031de9ff3e44683264e2ed6d434a8c0b6",
+      "updatedAt": "2026-01-21T03:48:26Z",
       "version": "0.2.0",
       "description": "This skill should be used when the user asks to \"create a slash command\", \"add a command\", \"write a custom command\", \"define command arguments\", \"use command frontmatter\", \"organize commands\", \"create command with file references\", \"interactive command\", \"use AskUserQuestion in command\", or needs guidance on slash command structure, YAML frontmatter fields, dynamic arguments, bash execution in commands, user interaction patterns, or command development best practices for Claude Code."
     },
@@ -48,8 +48,8 @@
       "name": "hook-development",
       "path": "plugins/plugin-dev/skills/hook-development",
       "repo": "https://github.com/anthropics/claude-code.git",
-      "head": "74cc597eb5c1a604e955ce97e7e3b82524f1062c",
-      "updatedAt": "2026-01-18T15:48:16Z",
+      "head": "a6a8045031de9ff3e44683264e2ed6d434a8c0b6",
+      "updatedAt": "2026-01-21T03:48:26Z",
       "version": "0.1.0",
       "description": "This skill should be used when the user asks to \"create a hook\", \"add a PreToolUse/PostToolUse/Stop hook\", \"validate tool use\", \"implement prompt-based hooks\", \"use ${CLAUDE_PLUGIN_ROOT}\", \"set up event-driven automation\", \"block dangerous commands\", or mentions hook events (PreToolUse, PostToolUse, Stop, SubagentStop, SessionStart, SessionEnd, UserPromptSubmit, PreCompact, Notification). Provides comprehensive guidance for creating and implementing Claude Code plugin hooks with focus on advanced prompt-based hooks API."
     },
@@ -57,8 +57,8 @@
       "name": "mcp-integration",
       "path": "plugins/plugin-dev/skills/mcp-integration",
       "repo": "https://github.com/anthropics/claude-code.git",
-      "head": "74cc597eb5c1a604e955ce97e7e3b82524f1062c",
-      "updatedAt": "2026-01-18T15:48:16Z",
+      "head": "a6a8045031de9ff3e44683264e2ed6d434a8c0b6",
+      "updatedAt": "2026-01-21T03:48:26Z",
       "version": "0.1.0",
       "description": "This skill should be used when the user asks to \"add MCP server\", \"integrate MCP\", \"configure MCP in plugin\", \"use .mcp.json\", \"set up Model Context Protocol\", \"connect external service\", mentions \"${CLAUDE_PLUGIN_ROOT} with MCP\", or discusses MCP server types (SSE, stdio, HTTP, WebSocket). Provides comprehensive guidance for integrating Model Context Protocol servers into Claude Code plugins for external tool and service integration."
     },
@@ -66,8 +66,8 @@
       "name": "plugin-settings",
       "path": "plugins/plugin-dev/skills/plugin-settings",
       "repo": "https://github.com/anthropics/claude-code.git",
-      "head": "74cc597eb5c1a604e955ce97e7e3b82524f1062c",
-      "updatedAt": "2026-01-18T15:48:16Z",
+      "head": "a6a8045031de9ff3e44683264e2ed6d434a8c0b6",
+      "updatedAt": "2026-01-21T03:48:26Z",
       "version": "0.1.0",
       "description": "This skill should be used when the user asks about \"plugin settings\", \"store plugin configuration\", \"user-configurable plugin\", \".local.md files\", \"plugin state files\", \"read YAML frontmatter\", \"per-project plugin settings\", or wants to make plugin behavior configurable. Documents the .claude/plugin-name.local.md pattern for storing plugin-specific configuration with YAML frontmatter and markdown content."
     },
@@ -75,8 +75,8 @@
       "name": "plugin-structure",
       "path": "plugins/plugin-dev/skills/plugin-structure",
       "repo": "https://github.com/anthropics/claude-code.git",
-      "head": "74cc597eb5c1a604e955ce97e7e3b82524f1062c",
-      "updatedAt": "2026-01-18T15:48:16Z",
+      "head": "a6a8045031de9ff3e44683264e2ed6d434a8c0b6",
+      "updatedAt": "2026-01-21T03:48:26Z",
       "version": "0.1.0",
       "description": "This skill should be used when the user asks to \"create a plugin\", \"scaffold a plugin\", \"understand plugin structure\", \"organize plugin components\", \"set up plugin.json\", \"use ${CLAUDE_PLUGIN_ROOT}\", \"add commands/agents/skills/hooks\", \"configure auto-discovery\", or needs guidance on plugin directory layout, manifest configuration, component organization, file naming conventions, or Claude Code plugin architecture best practices."
     },
@@ -84,8 +84,8 @@
       "name": "skill-development",
       "path": "plugins/plugin-dev/skills/skill-development",
       "repo": "https://github.com/anthropics/claude-code.git",
-      "head": "74cc597eb5c1a604e955ce97e7e3b82524f1062c",
-      "updatedAt": "2026-01-18T15:48:16Z",
+      "head": "a6a8045031de9ff3e44683264e2ed6d434a8c0b6",
+      "updatedAt": "2026-01-21T03:48:26Z",
       "version": "0.1.0",
       "description": "This skill should be used when the user wants to \"create a skill\", \"add a skill to plugin\", \"write a new skill\", \"improve skill description\", \"organize skill content\", or needs guidance on skill structure, progressive disclosure, or skill development best practices for Claude Code plugins."
     },
@@ -93,8 +93,8 @@
       "name": "vercel-deploy-claimable",
       "path": "skills/claude.ai/vercel-deploy-claimable",
       "repo": "https://github.com/vercel-labs/agent-skills",
-      "head": "ac6a79af08f6d32c34ee03c829824990f3de0a6d",
-      "updatedAt": "2026-01-18T15:48:16Z",
+      "head": "dd157cbd26f5c1f1154214035d3f8c9d7fe87a1c",
+      "updatedAt": "2026-01-21T03:48:26Z",
       "version": "1.0.0",
       "description": "Deploy applications and websites to Vercel. Use this skill when the user requests deployment actions such as \"Deploy my app\", \"Deploy this to production\", \"Create a preview deployment\", \"Deploy and give me the link\", or \"Push this live\". No authentication required - returns preview URL and claimable deployment link."
     },
@@ -102,8 +102,8 @@
       "name": "react-best-practices",
       "path": "skills/react-best-practices",
       "repo": "https://github.com/vercel-labs/agent-skills",
-      "head": "ac6a79af08f6d32c34ee03c829824990f3de0a6d",
-      "updatedAt": "2026-01-18T15:48:16Z",
+      "head": "dd157cbd26f5c1f1154214035d3f8c9d7fe87a1c",
+      "updatedAt": "2026-01-21T03:48:26Z",
       "version": "1.0.0",
       "description": "React and Next.js performance optimization guidelines from Vercel Engineering. This skill should be used when writing, reviewing, or refactoring React/Next.js code to ensure optimal performance patterns. Triggers on tasks involving React components, Next.js pages, data fetching, bundle optimization, or performance improvements."
     },
@@ -111,8 +111,8 @@
       "name": "web-design-guidelines",
       "path": "skills/web-design-guidelines",
       "repo": "https://github.com/vercel-labs/agent-skills",
-      "head": "ac6a79af08f6d32c34ee03c829824990f3de0a6d",
-      "updatedAt": "2026-01-18T15:48:16Z",
+      "head": "dd157cbd26f5c1f1154214035d3f8c9d7fe87a1c",
+      "updatedAt": "2026-01-21T03:48:26Z",
       "version": "1.0.0",
       "description": "Review UI code for Web Interface Guidelines compliance. Use when asked to \"review my UI\", \"check accessibility\", \"audit design\", \"review UX\", or \"check my site against best practices\"."
     },
