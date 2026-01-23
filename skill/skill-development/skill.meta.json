@@ -2,7 +2,7 @@
   "name": "skill-development",
   "description": "This skill should be used when the user wants to \"create a skill\", \"add a skill to plugin\", \"write a new skill\", \"improve skill description\", \"organize skill content\", or needs guidance on skill structure, progressive disclosure, or skill development best practices for Claude Code plugins.",
   "version": "0.1.0",
-  "head": "052a1317c02ff4ecca15a8f25a885ab1de284516",
-  "updatedAt": "2026-01-22T03:52:28Z",
-  "checkedAt": "2026-01-22T03:52:28Z"
+  "head": "10e6348e77d41af005e138f4c476e41b0762facf",
+  "updatedAt": "2026-01-23T03:47:21Z",
+  "checkedAt": "2026-01-23T03:47:21Z"
 }

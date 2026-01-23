@@ -2,7 +2,7 @@
   "name": "writing-rules",
   "description": "This skill should be used when the user asks to \"create a hookify rule\", \"write a hook rule\", \"configure hookify\", \"add a hookify rule\", or needs guidance on hookify rule syntax and patterns.",
   "version": "0.1.0",
-  "head": "052a1317c02ff4ecca15a8f25a885ab1de284516",
-  "updatedAt": "2026-01-22T03:52:28Z",
-  "checkedAt": "2026-01-22T03:52:28Z"
+  "head": "10e6348e77d41af005e138f4c476e41b0762facf",
+  "updatedAt": "2026-01-23T03:47:21Z",
+  "checkedAt": "2026-01-23T03:47:21Z"
 }
