@@ -2,7 +2,7 @@
   "name": "vercel-deploy-claimable",
   "description": "Deploy applications and websites to Vercel. Use this skill when the user requests deployment actions such as \"Deploy my app\", \"Deploy this to production\", \"Create a preview deployment\", \"Deploy and give me the link\", or \"Push this live\". No authentication required - returns preview URL and claimable deployment link.",
   "version": "1.0.0",
-  "head": "c4399b192588e71fdf0cb507c7b6ad9e9657ce6b",
-  "updatedAt": "2026-01-24T03:40:54Z",
-  "checkedAt": "2026-01-26T04:01:28Z"
+  "head": "23a77cf47783bbc1b647d40b14c1f61e3413a629",
+  "updatedAt": "2026-01-27T03:52:11Z",
+  "checkedAt": "2026-01-27T03:52:11Z"
 }

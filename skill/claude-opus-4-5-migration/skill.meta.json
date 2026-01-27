@@ -1,7 +1,7 @@
 {
   "name": "claude-opus-4-5-migration",
   "description": "Migrate prompts and code from Claude Sonnet 4.0, Sonnet 4.5, or Opus 4.1 to Opus 4.5. Use when the user wants to update their codebase, prompts, or API calls to use Opus 4.5. Handles model string updates and prompt adjustments for known Opus 4.5 behavioral differences. Does NOT migrate Haiku 4.5.",
-  "head": "e9a9efc1211bbd0a50ac0128c84526e3e355255a",
-  "updatedAt": "2026-01-24T03:40:54Z",
-  "checkedAt": "2026-01-26T04:01:28Z"
+  "head": "3f9a645986a352f22f58b086fb8c136b04f9232a",
+  "updatedAt": "2026-01-27T03:52:11Z",
+  "checkedAt": "2026-01-27T03:52:11Z"
 }

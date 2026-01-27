@@ -2,7 +2,7 @@
   "name": "command-development",
   "description": "This skill should be used when the user asks to \"create a slash command\", \"add a command\", \"write a custom command\", \"define command arguments\", \"use command frontmatter\", \"organize commands\", \"create command with file references\", \"interactive command\", \"use AskUserQuestion in command\", or needs guidance on slash command structure, YAML frontmatter fields, dynamic arguments, bash execution in commands, user interaction patterns, or command development best practices for Claude Code.",
   "version": "0.2.0",
-  "head": "e9a9efc1211bbd0a50ac0128c84526e3e355255a",
-  "updatedAt": "2026-01-24T03:40:54Z",
-  "checkedAt": "2026-01-26T04:01:28Z"
+  "head": "3f9a645986a352f22f58b086fb8c136b04f9232a",
+  "updatedAt": "2026-01-27T03:52:11Z",
+  "checkedAt": "2026-01-27T03:52:11Z"
 }

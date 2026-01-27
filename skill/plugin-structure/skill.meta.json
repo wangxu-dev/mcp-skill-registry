@@ -2,7 +2,7 @@
   "name": "plugin-structure",
   "description": "This skill should be used when the user asks to \"create a plugin\", \"scaffold a plugin\", \"understand plugin structure\", \"organize plugin components\", \"set up plugin.json\", \"use ${CLAUDE_PLUGIN_ROOT}\", \"add commands/agents/skills/hooks\", \"configure auto-discovery\", or needs guidance on plugin directory layout, manifest configuration, component organization, file naming conventions, or Claude Code plugin architecture best practices.",
   "version": "0.1.0",
-  "head": "e9a9efc1211bbd0a50ac0128c84526e3e355255a",
-  "updatedAt": "2026-01-24T03:40:54Z",
-  "checkedAt": "2026-01-26T04:01:28Z"
+  "head": "3f9a645986a352f22f58b086fb8c136b04f9232a",
+  "updatedAt": "2026-01-27T03:52:11Z",
+  "checkedAt": "2026-01-27T03:52:11Z"
 }
