@@ -2,7 +2,7 @@
   "name": "agent-development",
   "description": "This skill should be used when the user asks to \"create an agent\", \"add an agent\", \"write a subagent\", \"agent frontmatter\", \"when to use description\", \"agent examples\", \"agent tools\", \"agent colors\", \"autonomous agent\", or needs guidance on agent structure, system prompts, triggering conditions, or agent development best practices for Claude Code plugins.",
   "version": "0.1.0",
-  "head": "3f9a645986a352f22f58b086fb8c136b04f9232a",
-  "updatedAt": "2026-01-27T03:52:11Z",
-  "checkedAt": "2026-01-27T03:52:11Z"
+  "head": "8c48d2f508be0b63cbb5b5cd6b71d700d71c5b66",
+  "updatedAt": "2026-01-28T03:49:38Z",
+  "checkedAt": "2026-01-28T03:49:38Z"
 }

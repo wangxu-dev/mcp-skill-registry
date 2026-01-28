@@ -2,7 +2,7 @@
   "name": "hook-development",
   "description": "This skill should be used when the user asks to \"create a hook\", \"add a PreToolUse/PostToolUse/Stop hook\", \"validate tool use\", \"implement prompt-based hooks\", \"use ${CLAUDE_PLUGIN_ROOT}\", \"set up event-driven automation\", \"block dangerous commands\", or mentions hook events (PreToolUse, PostToolUse, Stop, SubagentStop, SessionStart, SessionEnd, UserPromptSubmit, PreCompact, Notification). Provides comprehensive guidance for creating and implementing Claude Code plugin hooks with focus on advanced prompt-based hooks API.",
   "version": "0.1.0",
-  "head": "3f9a645986a352f22f58b086fb8c136b04f9232a",
-  "updatedAt": "2026-01-27T03:52:11Z",
-  "checkedAt": "2026-01-27T03:52:11Z"
+  "head": "8c48d2f508be0b63cbb5b5cd6b71d700d71c5b66",
+  "updatedAt": "2026-01-28T03:49:38Z",
+  "checkedAt": "2026-01-28T03:49:38Z"
 }
