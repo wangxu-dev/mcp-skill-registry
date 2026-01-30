@@ -2,6 +2,6 @@
   "name": "theme-factory",
   "description": "Toolkit for styling artifacts with a theme. These artifacts can be slides, docs, reportings, HTML landing pages, etc. There are 10 pre-set themes with colors/fonts that you can apply to any artifact that has been creating, or can generate a new theme on-the-fly.",
   "head": "69c0b1a0674149f27b61b2635f935524b6add202",
-  "updatedAt": "2026-01-30T14:44:32Z",
-  "checkedAt": "2026-01-30T14:44:32Z"
+  "updatedAt": "2026-01-30T14:46:35Z",
+  "checkedAt": "2026-01-30T14:46:35Z"
 }
