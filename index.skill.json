@@ -1,100 +1,156 @@
 {
-  "generatedAt": "2026-01-30T04:14:03Z",
+  "generatedAt": "2026-01-30T14:44:32Z",
   "skills": [
     {
-      "name": "claude-opus-4-5-migration",
-      "path": "plugins/claude-opus-4-5-migration/skills/claude-opus-4-5-migration",
-      "repo": "https://github.com/anthropics/claude-code.git",
-      "head": "38f1f930522d9bbd7ef6e15c4d3b8dbd5f1f277b",
-      "updatedAt": "2026-01-30T04:14:03Z",
-      "description": "Migrate prompts and code from Claude Sonnet 4.0, Sonnet 4.5, or Opus 4.1 to Opus 4.5. Use when the user wants to update their codebase, prompts, or API calls to use Opus 4.5. Handles model string updates and prompt adjustments for known Opus 4.5 behavioral differences. Does NOT migrate Haiku 4.5."
+      "name": "algorithmic-art",
+      "path": "skills/algorithmic-art",
+      "repo": "https://github.com/anthropics/skills",
+      "head": "69c0b1a0674149f27b61b2635f935524b6add202",
+      "updatedAt": "2026-01-30T14:44:32Z",
+      "description": "Creating algorithmic art using p5.js with seeded randomness and interactive parameter exploration. Use this when users request creating art using code, generative art, algorithmic art, flow fields, or particle systems. Create original algorithmic art rather than copying existing artists' work to avoid copyright violations."
+    },
+    {
+      "name": "brand-guidelines",
+      "path": "skills/brand-guidelines",
+      "repo": "https://github.com/anthropics/skills",
+      "head": "69c0b1a0674149f27b61b2635f935524b6add202",
+      "updatedAt": "2026-01-30T14:44:32Z",
+      "description": "Applies Anthropic's official brand colors and typography to any sort of artifact that may benefit from having Anthropic's look-and-feel. Use it when brand colors or style guidelines, visual formatting, or company design standards apply."
+    },
+    {
+      "name": "canvas-design",
+      "path": "skills/canvas-design",
+      "repo": "https://github.com/anthropics/skills",
+      "head": "69c0b1a0674149f27b61b2635f935524b6add202",
+      "updatedAt": "2026-01-30T14:44:32Z",
+      "description": "Create beautiful visual art in .png and .pdf documents using design philosophy. You should use this skill when the user asks to create a poster, piece of art, design, or other static piece. Create original visual designs, never copying existing artists' work to avoid copyright violations."
+    },
+    {
+      "name": "doc-coauthoring",
+      "path": "skills/doc-coauthoring",
+      "repo": "https://github.com/anthropics/skills",
+      "head": "69c0b1a0674149f27b61b2635f935524b6add202",
+      "updatedAt": "2026-01-30T14:44:32Z",
+      "description": "Guide users through a structured workflow for co-authoring documentation. Use when user wants to write documentation, proposals, technical specs, decision docs, or similar structured content. This workflow helps users efficiently transfer context, refine content through iteration, and verify the doc works for readers. Trigger when user mentions writing docs, creating proposals, drafting specs, or similar documentation tasks."
+    },
+    {
+      "name": "docx",
+      "path": "skills/docx",
+      "repo": "https://github.com/anthropics/skills",
+      "head": "69c0b1a0674149f27b61b2635f935524b6add202",
+      "updatedAt": "2026-01-30T14:44:32Z",
+      "description": "Comprehensive document creation, editing, and analysis with support for tracked changes, comments, formatting preservation, and text extraction. When Claude needs to work with professional documents (.docx files) for: (1) Creating new documents, (2) Modifying or editing content, (3) Working with tracked changes, (4) Adding comments, or any other document tasks"
     },
     {
       "name": "frontend-design",
-      "path": "plugins/frontend-design/skills/frontend-design",
-      "repo": "https://github.com/anthropics/claude-code.git",
-      "head": "38f1f930522d9bbd7ef6e15c4d3b8dbd5f1f277b",
-      "updatedAt": "2026-01-30T04:14:03Z",
-      "description": "Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, or applications. Generates creative, polished code that avoids generic AI aesthetics."
+      "path": "skills/frontend-design",
+      "repo": "https://github.com/anthropics/skills",
+      "head": "69c0b1a0674149f27b61b2635f935524b6add202",
+      "updatedAt": "2026-01-30T14:44:32Z",
+      "description": "Create distinctive, production-grade frontend interfaces with high design quality. Use this skill when the user asks to build web components, pages, artifacts, posters, or applications (examples include websites, landing pages, dashboards, React components, HTML/CSS layouts, or when styling/beautifying any web UI). Generates creative, polished code and UI design that avoids generic AI aesthetics."
     },
     {
-      "name": "writing-rules",
-      "path": "plugins/hookify/skills/writing-rules",
-      "repo": "https://github.com/anthropics/claude-code.git",
-      "head": "38f1f930522d9bbd7ef6e15c4d3b8dbd5f1f277b",
-      "updatedAt": "2026-01-30T04:14:03Z",
-      "version": "0.1.0",
-      "description": "This skill should be used when the user asks to \"create a hookify rule\", \"write a hook rule\", \"configure hookify\", \"add a hookify rule\", or needs guidance on hookify rule syntax and patterns."
+      "name": "internal-comms",
+      "path": "skills/internal-comms",
+      "repo": "https://github.com/anthropics/skills",
+      "head": "69c0b1a0674149f27b61b2635f935524b6add202",
+      "updatedAt": "2026-01-30T14:44:32Z",
+      "description": "A set of resources to help me write all kinds of internal communications, using the formats that my company likes to use. Claude should use this skill whenever asked to write some sort of internal communications (status reports, leadership updates, 3P updates, company newsletters, FAQs, incident reports, project updates, etc.)."
     },
     {
-      "name": "agent-development",
-      "path": "plugins/plugin-dev/skills/agent-development",
-      "repo": "https://github.com/anthropics/claude-code.git",
-      "head": "38f1f930522d9bbd7ef6e15c4d3b8dbd5f1f277b",
-      "updatedAt": "2026-01-30T04:14:03Z",
-      "version": "0.1.0",
-      "description": "This skill should be used when the user asks to \"create an agent\", \"add an agent\", \"write a subagent\", \"agent frontmatter\", \"when to use description\", \"agent examples\", \"agent tools\", \"agent colors\", \"autonomous agent\", or needs guidance on agent structure, system prompts, triggering conditions, or agent development best practices for Claude Code plugins."
+      "name": "mcp-builder",
+      "path": "skills/mcp-builder",
+      "repo": "https://github.com/anthropics/skills",
+      "head": "69c0b1a0674149f27b61b2635f935524b6add202",
+      "updatedAt": "2026-01-30T14:44:32Z",
+      "description": "Guide for creating high-quality MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. Use when building MCP servers to integrate external APIs or services, whether in Python (FastMCP) or Node/TypeScript (MCP SDK)."
     },
     {
-      "name": "command-development",
-      "path": "plugins/plugin-dev/skills/command-development",
-      "repo": "https://github.com/anthropics/claude-code.git",
-      "head": "38f1f930522d9bbd7ef6e15c4d3b8dbd5f1f277b",
-      "updatedAt": "2026-01-30T04:14:03Z",
-      "version": "0.2.0",
-      "description": "This skill should be used when the user asks to \"create a slash command\", \"add a command\", \"write a custom command\", \"define command arguments\", \"use command frontmatter\", \"organize commands\", \"create command with file references\", \"interactive command\", \"use AskUserQuestion in command\", or needs guidance on slash command structure, YAML frontmatter fields, dynamic arguments, bash execution in commands, user interaction patterns, or command development best practices for Claude Code."
+      "name": "pdf",
+      "path": "skills/pdf",
+      "repo": "https://github.com/anthropics/skills",
+      "head": "69c0b1a0674149f27b61b2635f935524b6add202",
+      "updatedAt": "2026-01-30T14:44:32Z",
+      "description": "Comprehensive PDF manipulation toolkit for extracting text and tables, creating new PDFs, merging/splitting documents, and handling forms. When Claude needs to fill in a PDF form or programmatically process, generate, or analyze PDF documents at scale."
     },
     {
-      "name": "hook-development",
-      "path": "plugins/plugin-dev/skills/hook-development",
-      "repo": "https://github.com/anthropics/claude-code.git",
-      "head": "38f1f930522d9bbd7ef6e15c4d3b8dbd5f1f277b",
-      "updatedAt": "2026-01-30T04:14:03Z",
-      "version": "0.1.0",
-      "description": "This skill should be used when the user asks to \"create a hook\", \"add a PreToolUse/PostToolUse/Stop hook\", \"validate tool use\", \"implement prompt-based hooks\", \"use ${CLAUDE_PLUGIN_ROOT}\", \"set up event-driven automation\", \"block dangerous commands\", or mentions hook events (PreToolUse, PostToolUse, Stop, SubagentStop, SessionStart, SessionEnd, UserPromptSubmit, PreCompact, Notification). Provides comprehensive guidance for creating and implementing Claude Code plugin hooks with focus on advanced prompt-based hooks API."
+      "name": "pptx",
+      "path": "skills/pptx",
+      "repo": "https://github.com/anthropics/skills",
+      "head": "69c0b1a0674149f27b61b2635f935524b6add202",
+      "updatedAt": "2026-01-30T14:44:32Z",
+      "description": "Presentation creation, editing, and analysis. When Claude needs to work with presentations (.pptx files) for: (1) Creating new presentations, (2) Modifying or editing content, (3) Working with layouts, (4) Adding comments or speaker notes, or any other presentation tasks"
     },
     {
-      "name": "mcp-integration",
-      "path": "plugins/plugin-dev/skills/mcp-integration",
-      "repo": "https://github.com/anthropics/claude-code.git",
-      "head": "38f1f930522d9bbd7ef6e15c4d3b8dbd5f1f277b",
-      "updatedAt": "2026-01-30T04:14:03Z",
-      "version": "0.1.0",
-      "description": "This skill should be used when the user asks to \"add MCP server\", \"integrate MCP\", \"configure MCP in plugin\", \"use .mcp.json\", \"set up Model Context Protocol\", \"connect external service\", mentions \"${CLAUDE_PLUGIN_ROOT} with MCP\", or discusses MCP server types (SSE, stdio, HTTP, WebSocket). Provides comprehensive guidance for integrating Model Context Protocol servers into Claude Code plugins for external tool and service integration."
+      "name": "skill-creator",
+      "path": "skills/skill-creator",
+      "repo": "https://github.com/anthropics/skills",
+      "head": "69c0b1a0674149f27b61b2635f935524b6add202",
+      "updatedAt": "2026-01-30T14:44:32Z",
+      "description": "Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Claude's capabilities with specialized knowledge, workflows, or tool integrations."
     },
     {
-      "name": "plugin-settings",
-      "path": "plugins/plugin-dev/skills/plugin-settings",
-      "repo": "https://github.com/anthropics/claude-code.git",
-      "head": "38f1f930522d9bbd7ef6e15c4d3b8dbd5f1f277b",
-      "updatedAt": "2026-01-30T04:14:03Z",
-      "version": "0.1.0",
-      "description": "This skill should be used when the user asks about \"plugin settings\", \"store plugin configuration\", \"user-configurable plugin\", \".local.md files\", \"plugin state files\", \"read YAML frontmatter\", \"per-project plugin settings\", or wants to make plugin behavior configurable. Documents the .claude/plugin-name.local.md pattern for storing plugin-specific configuration with YAML frontmatter and markdown content."
+      "name": "slack-gif-creator",
+      "path": "skills/slack-gif-creator",
+      "repo": "https://github.com/anthropics/skills",
+      "head": "69c0b1a0674149f27b61b2635f935524b6add202",
+      "updatedAt": "2026-01-30T14:44:32Z",
+      "description": "Knowledge and utilities for creating animated GIFs optimized for Slack. Provides constraints, validation tools, and animation concepts. Use when users request animated GIFs for Slack like \"make me a GIF of X doing Y for Slack.\""
     },
     {
-      "name": "plugin-structure",
-      "path": "plugins/plugin-dev/skills/plugin-structure",
-      "repo": "https://github.com/anthropics/claude-code.git",
-      "head": "38f1f930522d9bbd7ef6e15c4d3b8dbd5f1f277b",
-      "updatedAt": "2026-01-30T04:14:03Z",
-      "version": "0.1.0",
-      "description": "This skill should be used when the user asks to \"create a plugin\", \"scaffold a plugin\", \"understand plugin structure\", \"organize plugin components\", \"set up plugin.json\", \"use ${CLAUDE_PLUGIN_ROOT}\", \"add commands/agents/skills/hooks\", \"configure auto-discovery\", or needs guidance on plugin directory layout, manifest configuration, component organization, file naming conventions, or Claude Code plugin architecture best practices."
+      "name": "theme-factory",
+      "path": "skills/theme-factory",
+      "repo": "https://github.com/anthropics/skills",
+      "head": "69c0b1a0674149f27b61b2635f935524b6add202",
+      "updatedAt": "2026-01-30T14:44:32Z",
+      "description": "Toolkit for styling artifacts with a theme. These artifacts can be slides, docs, reportings, HTML landing pages, etc. There are 10 pre-set themes with colors/fonts that you can apply to any artifact that has been creating, or can generate a new theme on-the-fly."
     },
     {
-      "name": "skill-development",
-      "path": "plugins/plugin-dev/skills/skill-development",
-      "repo": "https://github.com/anthropics/claude-code.git",
-      "head": "38f1f930522d9bbd7ef6e15c4d3b8dbd5f1f277b",
-      "updatedAt": "2026-01-30T04:14:03Z",
-      "version": "0.1.0",
-      "description": "This skill should be used when the user wants to \"create a skill\", \"add a skill to plugin\", \"write a new skill\", \"improve skill description\", \"organize skill content\", or needs guidance on skill structure, progressive disclosure, or skill development best practices for Claude Code plugins."
+      "name": "web-artifacts-builder",
+      "path": "skills/web-artifacts-builder",
+      "repo": "https://github.com/anthropics/skills",
+      "head": "69c0b1a0674149f27b61b2635f935524b6add202",
+      "updatedAt": "2026-01-30T14:44:32Z",
+      "description": "Suite of tools for creating elaborate, multi-component claude.ai HTML artifacts using modern frontend web technologies (React, Tailwind CSS, shadcn/ui). Use for complex artifacts requiring state management, routing, or shadcn/ui components - not for simple single-file HTML/JSX artifacts."
+    },
+    {
+      "name": "webapp-testing",
+      "path": "skills/webapp-testing",
+      "repo": "https://github.com/anthropics/skills",
+      "head": "69c0b1a0674149f27b61b2635f935524b6add202",
+      "updatedAt": "2026-01-30T14:44:32Z",
+      "description": "Toolkit for interacting with and testing local web applications using Playwright. Supports verifying frontend functionality, debugging UI behavior, capturing browser screenshots, and viewing browser logs."
+    },
+    {
+      "name": "xlsx",
+      "path": "skills/xlsx",
+      "repo": "https://github.com/anthropics/skills",
+      "head": "69c0b1a0674149f27b61b2635f935524b6add202",
+      "updatedAt": "2026-01-30T14:44:32Z",
+      "description": "Comprehensive spreadsheet creation, editing, and analysis with support for formulas, formatting, data analysis, and visualization. When Claude needs to work with spreadsheets (.xlsx, .xlsm, .csv, .tsv, etc) for: (1) Creating new spreadsheets with formulas and formatting, (2) Reading or analyzing data, (3) Modify existing spreadsheets while preserving formulas, (4) Data analysis and visualization in spreadsheets, or (5) Recalculating formulas"
+    },
+    {
+      "name": "template",
+      "path": "template",
+      "repo": "https://github.com/anthropics/skills",
+      "head": "69c0b1a0674149f27b61b2635f935524b6add202",
+      "updatedAt": "2026-01-30T14:44:32Z",
+      "description": "Replace with description of the skill and when Claude should use it."
+    },
+    {
+      "name": "remotion",
+      "path": "skills/remotion",
+      "repo": "https://github.com/remotion-dev/skills.git",
+      "head": "bcddbb086a15c0a43c78b8dc23f2e3f961100625",
+      "updatedAt": "2026-01-30T14:44:32Z",
+      "description": "Best practices for Remotion - Video creation in React"
     },
     {
       "name": "vercel-deploy-claimable",
       "path": "skills/claude.ai/vercel-deploy-claimable",
       "repo": "https://github.com/vercel-labs/agent-skills",
       "head": "e23951b8cad2f4b1e7e176c5731127c1263fe86f",
-      "updatedAt": "2026-01-30T04:14:03Z",
+      "updatedAt": "2026-01-30T14:44:32Z",
       "version": "1.0.0",
       "description": "Deploy applications and websites to Vercel. Use this skill when the user requests deployment actions such as \"Deploy my app\", \"Deploy this to production\", \"Create a preview deployment\", \"Deploy and give me the link\", or \"Push this live\". No authentication required - returns preview URL and claimable deployment link."
     },
@@ -103,7 +159,7 @@
       "path": "skills/composition-patterns",
       "repo": "https://github.com/vercel-labs/agent-skills",
       "head": "e23951b8cad2f4b1e7e176c5731127c1263fe86f",
-      "updatedAt": "2026-01-30T04:14:03Z",
+      "updatedAt": "2026-01-30T14:44:32Z",
       "version": "1.0.0"
     },
     {
@@ -111,7 +167,7 @@
       "path": "skills/react-best-practices",
       "repo": "https://github.com/vercel-labs/agent-skills",
       "head": "e23951b8cad2f4b1e7e176c5731127c1263fe86f",
-      "updatedAt": "2026-01-30T04:14:03Z",
+      "updatedAt": "2026-01-30T14:44:32Z",
       "version": "1.0.0",
       "description": "React and Next.js performance optimization guidelines from Vercel Engineering. This skill should be used when writing, reviewing, or refactoring React/Next.js code to ensure optimal performance patterns. Triggers on tasks involving React components, Next.js pages, data fetching, bundle optimization, or performance improvements."
     },
@@ -120,7 +176,7 @@
       "path": "skills/react-native-skills",
       "repo": "https://github.com/vercel-labs/agent-skills",
       "head": "e23951b8cad2f4b1e7e176c5731127c1263fe86f",
-      "updatedAt": "2026-01-30T04:14:03Z",
+      "updatedAt": "2026-01-30T14:44:32Z",
       "version": "1.0.0"
     },
     {
@@ -128,7 +184,7 @@
       "path": "skills/web-design-guidelines",
       "repo": "https://github.com/vercel-labs/agent-skills",
       "head": "e23951b8cad2f4b1e7e176c5731127c1263fe86f",
-      "updatedAt": "2026-01-30T04:14:03Z",
+      "updatedAt": "2026-01-30T14:44:32Z",
       "version": "1.0.0",
       "description": "Review UI code for Web Interface Guidelines compliance. Use when asked to \"review my UI\", \"check accessibility\", \"audit design\", \"review UX\", or \"check my site against best practices\"."
     },
@@ -137,7 +193,7 @@
       "path": "work-session",
       "repo": "https://github.com/wangxu-dev/skills",
       "head": "254a2b7c6e8b859587553b0818e698b073b6978f",
-      "updatedAt": "2026-01-20T03:48:54Z",
+      "updatedAt": "2026-01-30T14:44:32Z",
       "version": "0.0.1",
       "description": "Preserve work progress across disconnected sessions. Use '/work-session save' when ending work, '/work-session restore' when starting fresh."
     }
