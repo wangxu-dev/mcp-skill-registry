@@ -139,33 +139,6 @@ func run(sourcesPath, indexPath, sourcesDir string, keepSources bool) error {
 		}
 		repoNameSeen[repoName] = repo
 
-		head, err := gitRemoteHead(repo, srcRepo.Branch)
-		if err != nil {
-			return err
-		}
-
-		if existingHead[repo] == head && head != "" && !needsSourcePathUpdate(existingByRepo[repo]) {
-			for _, s := range existingByRepo[repo] {
-				pathOwners[destPathForName(s.Name)] = repo
-				meta := skillMeta{
-					Name:      s.Name,
-					Head:      s.Head,
-					UpdatedAt: s.UpdatedAt,
-					CheckedAt: now,
-				}
-				if err := enrichMetaFromSkill(destPathForName(s.Name), &meta); err != nil {
-					return err
-				}
-				s.Version = meta.Version
-				s.Description = meta.Description
-				updatedSkills = append(updatedSkills, s)
-				if err := writeSkillMeta(destPathForName(s.Name), meta); err != nil {
-					return err
-				}
-			}
-			continue
-		}
-
 		repoSkills, actualHead, err := scanRepo(repo, srcRepo.Branch, sourcesDir, repoName, srcRepo.Exclude)
 		if err != nil {
 			return err
@@ -431,6 +404,9 @@ func repoFolderName(repo string) string {
 	parts := strings.Split(repo, "/")
 	if len(parts) == 0 {
 		return ""
+	}
+	if len(parts) >= 2 {
+		return parts[len(parts)-2] + "-" + parts[len(parts)-1]
 	}
 	return parts[len(parts)-1]
 }
