@@ -2,6 +2,6 @@
   "name": "xlsx",
   "description": "Comprehensive spreadsheet creation, editing, and analysis with support for formulas, formatting, data analysis, and visualization. When Claude needs to work with spreadsheets (.xlsx, .xlsm, .csv, .tsv, etc) for: (1) Creating new spreadsheets with formulas and formatting, (2) Reading or analyzing data, (3) Modify existing spreadsheets while preserving formulas, (4) Data analysis and visualization in spreadsheets, or (5) Recalculating formulas",
   "head": "69c0b1a0674149f27b61b2635f935524b6add202",
-  "updatedAt": "2026-02-02T04:29:21Z",
-  "checkedAt": "2026-02-02T04:29:21Z"
+  "updatedAt": "2026-02-03T04:20:42Z",
+  "checkedAt": "2026-02-03T04:20:42Z"
 }
