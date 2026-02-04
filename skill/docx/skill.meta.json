@@ -1,7 +1,7 @@
 {
   "name": "docx",
-  "description": "Comprehensive document creation, editing, and analysis with support for tracked changes, comments, formatting preservation, and text extraction. When Claude needs to work with professional documents (.docx files) for: (1) Creating new documents, (2) Modifying or editing content, (3) Working with tracked changes, (4) Adding comments, or any other document tasks",
-  "head": "69c0b1a0674149f27b61b2635f935524b6add202",
-  "updatedAt": "2026-02-03T04:20:42Z",
-  "checkedAt": "2026-02-03T04:20:42Z"
+  "description": "Use this skill whenever the user wants to create, read, edit, or manipulate Word documents (.docx files). Triggers include: any mention of \\\"Word doc\\\", \\\"word document\\\", \\\".docx\\\", or requests to produce professional documents with formatting like tables of contents, headings, page numbers, or letterheads. Also use when extracting or reorganizing content from .docx files, inserting or replacing images in documents, performing find-and-replace in Word files, working with tracked changes or comments, or converting content into a polished Word document. If the user asks for a \\\"report\\\", \\\"memo\\\", \\\"letter\\\", \\\"template\\\", or similar deliverable as a Word or .docx file, use this skill. Do NOT use for PDFs, spreadsheets, Google Docs, or general coding tasks unrelated to document generation.",
+  "head": "a5bcdd7e58cdff48566bf876f0a72a2008dcefbc",
+  "updatedAt": "2026-02-04T04:14:47Z",
+  "checkedAt": "2026-02-04T04:14:47Z"
 }

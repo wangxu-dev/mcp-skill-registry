@@ -1,7 +1,7 @@
 {
   "name": "pptx",
-  "description": "Presentation creation, editing, and analysis. When Claude needs to work with presentations (.pptx files) for: (1) Creating new presentations, (2) Modifying or editing content, (3) Working with layouts, (4) Adding comments or speaker notes, or any other presentation tasks",
-  "head": "69c0b1a0674149f27b61b2635f935524b6add202",
-  "updatedAt": "2026-02-03T04:20:42Z",
-  "checkedAt": "2026-02-03T04:20:42Z"
+  "description": "Use this skill any time a .pptx file is involved in any way — as input, output, or both. This includes: creating slide decks, pitch decks, or presentations; reading, parsing, or extracting text from any .pptx file (even if the extracted content will be used elsewhere, like in an email or summary); editing, modifying, or updating existing presentations; combining or splitting slide files; working with templates, layouts, speaker notes, or comments. Trigger whenever the user mentions \\\"deck,\\\" \\\"slides,\\\" \\\"presentation,\\\" or references a .pptx filename, regardless of what they plan to do with the content afterward. If a .pptx file needs to be opened, created, or touched, use this skill.",
+  "head": "a5bcdd7e58cdff48566bf876f0a72a2008dcefbc",
+  "updatedAt": "2026-02-04T04:14:47Z",
+  "checkedAt": "2026-02-04T04:14:47Z"
 }
