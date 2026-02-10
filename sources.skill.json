@@ -15,6 +15,12 @@
     },
     {
       "repo": "https://github.com/AvdLee/SwiftUI-Agent-Skill.git"
+    },
+    {
+      "repo": "https://github.com/avdlee/swift-concurrency-agent-skill"
+    },
+    {
+      "repo": "https://github.com/better-auth/skills.git"
     }
   ]
 }
