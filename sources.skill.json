@@ -12,6 +12,9 @@
     },
     {
       "repo": "https://github.com/remotion-dev/skills.git"
+    },
+    {
+      "repo": "https://github.com/AvdLee/SwiftUI-Agent-Skill.git"
     }
   ]
 }
