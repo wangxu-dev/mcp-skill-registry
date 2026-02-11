@@ -1,6 +1,5 @@
 {
-  "name": "create-auth",
-  "description": "Skill for creating auth layers in TypeScript/JavaScript apps using Better Auth.",
+  "name": "security",
   "head": "e7d422e40e7ddfe5cd7514a2fea059d54fe6df5e",
   "updatedAt": "2026-02-11T04:34:04Z",
   "checkedAt": "2026-02-11T04:34:04Z"
