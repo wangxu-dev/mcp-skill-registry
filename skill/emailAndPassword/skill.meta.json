@@ -2,6 +2,6 @@
   "name": "emailAndPassword",
   "description": "This skill provides guidance and enforcement rules for implementing secure email and password authentication using Better Auth.",
   "head": "09b6d1b94fe9c5e44c0a4ed7cc829a5ff325bcdd",
-  "updatedAt": "2026-02-14T04:15:03Z",
-  "checkedAt": "2026-02-14T04:15:03Z"
+  "updatedAt": "2026-02-15T04:27:00Z",
+  "checkedAt": "2026-02-15T04:27:00Z"
 }
