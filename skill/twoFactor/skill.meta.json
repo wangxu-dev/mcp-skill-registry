@@ -2,6 +2,6 @@
   "name": "twoFactor",
   "description": "This skill provides guidance and enforcement rules for implementing secure two-factor authentication (2FA) using Better Auth's twoFactor plugin.",
   "head": "09b6d1b94fe9c5e44c0a4ed7cc829a5ff325bcdd",
-  "updatedAt": "2026-02-16T04:30:55Z",
-  "checkedAt": "2026-02-16T04:30:55Z"
+  "updatedAt": "2026-02-17T04:24:45Z",
+  "checkedAt": "2026-02-17T04:24:45Z"
 }
