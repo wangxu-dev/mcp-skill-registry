@@ -1,7 +1,7 @@
 {
   "name": "skill-creator",
-  "description": "Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Claude's capabilities with specialized knowledge, workflows, or tool integrations.",
-  "head": "1ed29a03dc852d30fa6ef2ca53a67dc2c2c2c563",
-  "updatedAt": "2026-02-25T04:25:45Z",
-  "checkedAt": "2026-02-25T04:25:45Z"
+  "description": "Create new skills, modify and improve existing skills, and measure skill performance. Use when users want to create a skill from scratch, update or optimize an existing skill, run evals to test a skill, benchmark skill performance with variance analysis, or optimize a skill's description for better triggering accuracy.",
+  "head": "3d59511518591fa82e6cfcf0438d68dd5dad3e76",
+  "updatedAt": "2026-02-26T04:22:22Z",
+  "checkedAt": "2026-02-26T04:22:22Z"
 }
