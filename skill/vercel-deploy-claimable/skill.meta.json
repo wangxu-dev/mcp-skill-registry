@@ -3,6 +3,6 @@
   "description": "Deploy applications and websites to Vercel. Use this skill when the user requests deployment actions such as \"Deploy my app\", \"Deploy this to production\", \"Create a preview deployment\", \"Deploy and give me the link\", or \"Push this live\". No authentication required - returns preview URL and claimable deployment link.",
   "version": "1.0.0",
   "head": "e23951b8cad2f4b1e7e176c5731127c1263fe86f",
-  "updatedAt": "2026-02-26T04:22:22Z",
-  "checkedAt": "2026-02-26T04:22:22Z"
+  "updatedAt": "2026-02-27T04:18:44Z",
+  "checkedAt": "2026-02-27T04:18:44Z"
 }
