@@ -11,28 +11,34 @@ Use this skill to build, review, or improve SwiftUI features with correct state 
 ## Workflow Decision Tree
 
 ### 1) Review existing SwiftUI code
+- **First, consult `references/latest-apis.md`** to ensure only current, non-deprecated APIs are used
 - Check property wrapper usage against the selection guide (see `references/state-management.md`)
 - Verify view composition follows extraction rules (see `references/view-structure.md`)
 - Check performance patterns are applied (see `references/performance-patterns.md`)
 - Verify list patterns use stable identity (see `references/list-patterns.md`)
 - Check animation patterns for correctness (see `references/animation-basics.md`, `references/animation-transitions.md`)
+- Review accessibility: proper grouping, traits, Dynamic Type support (see `references/accessibility-patterns.md`)
 - Inspect Liquid Glass usage for correctness and consistency (see `references/liquid-glass.md`)
 - Validate iOS 26+ availability handling with sensible fallbacks
 
 ### 2) Improve existing SwiftUI code
+- **First, consult `references/latest-apis.md`** to replace any deprecated APIs with their modern equivalents
 - Audit state management for correct wrapper selection (see `references/state-management.md`)
 - Extract complex views into separate subviews (see `references/view-structure.md`)
 - Refactor hot paths to minimize redundant state updates (see `references/performance-patterns.md`)
 - Ensure ForEach uses stable identity (see `references/list-patterns.md`)
 - Improve animation patterns (use value parameter, proper transitions, see `references/animation-basics.md`, `references/animation-transitions.md`)
+- Improve accessibility: use `Button` over tap gestures, add `@ScaledMetric` for Dynamic Type (see `references/accessibility-patterns.md`)
 - Suggest image downsampling when `UIImage(data:)` is used (as optional optimization, see `references/image-optimization.md`)
 - Adopt Liquid Glass only when explicitly requested by the user
 
 ### 3) Implement new SwiftUI feature
+- **First, consult `references/latest-apis.md`** to use only current, non-deprecated APIs for the target deployment version
 - Design data flow first: identify owned vs injected state (see `references/state-management.md`)
 - Structure views for optimal diffing (extract subviews early, see `references/view-structure.md`)
 - Keep business logic in services and models for testability (see `references/layout-best-practices.md`)
 - Use correct animation patterns (implicit vs explicit, transitions, see `references/animation-basics.md`, `references/animation-transitions.md`, `references/animation-advanced.md`)
+- Use `Button` for tappable elements, add accessibility grouping and labels (see `references/accessibility-patterns.md`)
 - Apply glass effects after layout/appearance modifiers (see `references/liquid-glass.md`)
 - Gate iOS 26+ features with `#available` and provide fallbacks
 
@@ -72,7 +78,7 @@ Use this skill to build, review, or improve SwiftUI features with correct state 
 - Suggest image downsampling when `UIImage(data:)` is encountered (as optional optimization)
 - Avoid layout thrash (deep hierarchies, excessive `GeometryReader`)
 - Gate frequent geometry updates by thresholds
-- Use `Self._printChanges()` to debug unexpected view updates
+- Use `Self._logChanges()` or `Self._printChanges()` to debug unexpected view updates
 
 ### Animations
 - Use `.animation(_:value:)` with value parameter (deprecated version without value is too broad)
@@ -84,6 +90,13 @@ Use this skill to build, review, or improve SwiftUI features with correct state 
 - Use `.keyframeAnimator` for precise timing control (iOS 17+)
 - Animation completion handlers need `.transaction(value:)` for reexecution
 - Implicit animations override explicit animations (later in view tree wins)
+
+### Accessibility
+- Prefer `Button` over `onTapGesture` for tappable elements (free VoiceOver support)
+- Use `@ScaledMetric` for custom numeric values that should scale with Dynamic Type
+- Group related elements with `accessibilityElement(children: .combine)` for joined labels
+- Provide `accessibilityLabel` when default labels are unclear or missing
+- Use `accessibilityRepresentation` for custom controls that should behave like native ones
 
 ### Liquid Glass (iOS 26+)
 **Only adopt when explicitly requested by the user.**
@@ -133,6 +146,10 @@ Button("Confirm") { }
 ```
 
 ## Review Checklist
+
+### Latest APIs (see `references/latest-apis.md`)
+- [ ] No deprecated modifiers used (check against the quick lookup table)
+- [ ] API choices match the project's minimum deployment target
 
 ### State Management
 - [ ] `@State` properties are `private`
@@ -187,6 +204,12 @@ Button("Confirm") { }
 - [ ] Keyframe animations for precise timing (iOS 17+)
 - [ ] Completion handlers use `.transaction(value:)` for reexecution
 
+### Accessibility (see `references/accessibility-patterns.md`)
+- [ ] `Button` used instead of `onTapGesture` for tappable elements
+- [ ] `@ScaledMetric` used for custom values that should scale with Dynamic Type
+- [ ] Related elements grouped with `accessibilityElement(children:)`
+- [ ] Custom controls use `accessibilityRepresentation` when appropriate
+
 ### Liquid Glass (iOS 26+)
 - [ ] `#available(iOS 26, *)` with fallback for Liquid Glass
 - [ ] Multiple glass views wrapped in `GlassEffectContainer`
@@ -195,11 +218,13 @@ Button("Confirm") { }
 - [ ] Shapes and tints consistent across related elements
 
 ## References
+- `references/latest-apis.md` - **Required reading for all workflows.** Version-segmented guide of deprecated-to-modern API transitions (iOS 15+ through iOS 26+)
 - `references/state-management.md` - Property wrappers and data flow
 - `references/view-structure.md` - View composition, extraction, and container patterns
 - `references/performance-patterns.md` - Performance optimization techniques and anti-patterns
 - `references/list-patterns.md` - ForEach identity, stability, and list best practices
 - `references/layout-best-practices.md` - Layout patterns, context-agnostic views, and testability
+- `references/accessibility-patterns.md` - Accessibility traits, grouping, Dynamic Type, and VoiceOver
 - `references/animation-basics.md` - Core animation concepts, implicit/explicit animations, timing, performance
 - `references/animation-transitions.md` - Transitions, custom transitions, Animatable protocol
 - `references/animation-advanced.md` - Transactions, phase/keyframe animations (iOS 17+), completion handlers (iOS 17+)

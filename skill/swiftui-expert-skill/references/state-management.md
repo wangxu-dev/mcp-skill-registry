@@ -52,6 +52,8 @@ struct MyView: View {
 }
 ```
 
+**Critical**: When a view *owns* an `@Observable` object, always use `@State` -- not `let`. Without `@State`, SwiftUI may recreate the instance when a parent view redraws, losing accumulated state. `@State` tells SwiftUI to preserve the instance across view redraws. Using `@State` also provides bindings directly (no need for `@Bindable`).
+
 **Note**: You may want to mark `@Observable` classes with `@MainActor` to ensure thread safety with SwiftUI, unless your project or package uses Default Actor Isolation set to `MainActor`—in which case, the explicit attribute is redundant and can be omitted.
 
 ## @Binding
@@ -381,6 +383,27 @@ struct MyView: View {
     }
 }
 ```
+
+### Custom Environment Values with @Entry
+
+Use the `@Entry` macro (Xcode 16+, backward compatible to iOS 13) to define custom environment values without boilerplate:
+
+```swift
+extension EnvironmentValues {
+    @Entry var accentTheme: Theme = .default
+}
+
+// Inject
+ContentView()
+    .environment(\.accentTheme, customTheme)
+
+// Access
+struct ThemedView: View {
+    @Environment(\.accentTheme) private var theme
+}
+```
+
+The `@Entry` macro replaces the manual `EnvironmentKey` conformance pattern. It also works with `TransactionValues`, `ContainerValues`, and `FocusedValues`.
 
 ### @Environment with @Observable (iOS 17+ - Preferred)
 

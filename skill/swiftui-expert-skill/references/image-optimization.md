@@ -206,6 +206,46 @@ Mention this optimization when you see `UIImage(data:)` usage, particularly in:
 
 **Don't automatically apply it**—present it as an optional improvement for performance-sensitive scenarios.
 
+## UIImage Loading and Memory
+
+### UIImage(named:) Caches in System Cache
+
+`UIImage(named:)` adds images to the system cache, which can cause memory spikes when loading many images (e.g., in a slider or gallery). For single-use or frequently-rotated images, use `UIImage(contentsOfFile:)` to bypass the cache:
+
+```swift
+// Caches in system cache -- memory builds up
+let image = UIImage(named: "Wallpapers/image_001.jpg")
+
+// No system caching -- memory stays flat
+guard let path = Bundle.main.path(forResource: "Wallpapers/image_001.jpg", ofType: nil) else { return nil }
+let image = UIImage(contentsOfFile: path)
+```
+
+### NSCache for Controlled Image Caching
+
+When image processing (resizing, filtering) is needed, use `NSCache` with a `countLimit` to bound memory instead of relying on system caching:
+
+```swift
+struct ImageCache {
+    private let cache = NSCache<NSString, UIImage>()
+
+    init(countLimit: Int = 50) {
+        cache.countLimit = countLimit
+    }
+
+    subscript(key: String) -> UIImage? {
+        get { cache.object(forKey: key as NSString) }
+        nonmutating set {
+            if let newValue {
+                cache.setObject(newValue, forKey: key as NSString)
+            } else {
+                cache.removeObject(forKey: key as NSString)
+            }
+        }
+    }
+}
+```
+
 ## SF Symbols
 
 ### Using SF Symbols
