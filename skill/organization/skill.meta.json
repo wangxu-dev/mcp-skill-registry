@@ -1,7 +1,7 @@
 {
   "name": "organization",
-  "description": "This skill provides guidance and enforcement rules for implementing multi-tenant organizations, teams, and role-based access control using Better Auth's organization plugin.",
-  "head": "f7c870fc9f9040f22ec39230ffc0f8b487e52893",
-  "updatedAt": "2026-03-02T04:20:02Z",
-  "checkedAt": "2026-03-02T04:20:02Z"
+  "description": "Configure multi-tenant organizations, manage members and invitations, define custom roles and permissions, set up teams, and implement RBAC using Better Auth's organization plugin. Use when users need org setup, team management, member roles, access control, or the Better Auth organization plugin.",
+  "head": "6a1636950a1d7fc53602639ce7505a4a5d39c797",
+  "updatedAt": "2026-03-03T04:20:36Z",
+  "checkedAt": "2026-03-03T04:20:36Z"
 }
