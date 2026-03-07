@@ -1,7 +1,7 @@
 {
   "name": "swiftui-expert-skill",
   "description": "Write, review, or improve SwiftUI code following best practices for state management, view composition, performance, and iOS 26+ Liquid Glass adoption. Use when building new SwiftUI features, refactoring existing views, reviewing code quality, or adopting modern SwiftUI patterns.",
-  "head": "020c48af27bce615f3def0ef0ee15da7cf43687f",
-  "updatedAt": "2026-03-06T04:13:44Z",
-  "checkedAt": "2026-03-06T04:13:44Z"
+  "head": "5320a611d7c0fe45251722433901d8f309dc0a8e",
+  "updatedAt": "2026-03-07T04:04:41Z",
+  "checkedAt": "2026-03-07T04:04:41Z"
 }

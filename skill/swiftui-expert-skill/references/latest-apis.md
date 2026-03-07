@@ -556,14 +556,18 @@ ScrollView {
 
 **Use `backgroundExtensionEffect()` for edge-extending blurred backgrounds.**
 
+Views behind a Liquid Glass sidebar can appear clipped. This modifier mirrors and blurs content outside the safe area so artwork remains visible.
+
 ```swift
 Image("hero")
     .backgroundExtensionEffect()
 ```
 
+> Source: "Build a SwiftUI app with the new design" (WWDC25, session 323)
+
 ### Tab Bar
 
-**Use `tabBarMinimizeBehavior(_:)` to control tab bar minimization.**
+**Use `tabBarMinimizeBehavior(_:)` to control tab bar minimization on scroll.**
 
 ```swift
 TabView {
@@ -571,6 +575,249 @@ TabView {
 }
 .tabBarMinimizeBehavior(.onScrollDown)
 ```
+
+**Use `tabViewBottomAccessory` for persistent controls above the tab bar.** Read `tabViewBottomAccessoryPlacement` from the environment to adapt content when the accessory collapses into the tab bar area.
+
+```swift
+TabView {
+    // tabs
+}
+.tabViewBottomAccessory {
+    NowPlayingBar()
+}
+```
+
+**Use `Tab(role: .search)` for a dedicated search tab.** The tab separates from the rest and morphs into a search field when selected.
+
+```swift
+TabView {
+    Tab("Home", systemImage: "house") { HomeView() }
+    Tab("Profile", systemImage: "person") { ProfileView() }
+    Tab(role: .search) { SearchResultsView() }
+}
+```
+
+> Source: "What's new in SwiftUI" (WWDC25, session 256) and "Build a SwiftUI app with the new design" (WWDC25, session 323)
+
+### Toolbars
+
+**Use `ToolbarSpacer` to control grouping of toolbar items.** Fixed spacers visually separate related groups; flexible spacers push items apart.
+
+```swift
+.toolbar {
+    ToolbarItem(placement: .topBarTrailing) {
+        Button("Up", systemImage: "chevron.up") { }
+    }
+    ToolbarItem(placement: .topBarTrailing) {
+        Button("Down", systemImage: "chevron.down") { }
+    }
+    ToolbarSpacer(.fixed)
+    ToolbarItem(placement: .topBarTrailing) {
+        Button("Settings", systemImage: "gear") { }
+    }
+}
+```
+
+**Use `sharedBackgroundVisibility(.hidden)` to remove the glass group background from an individual toolbar item.**
+
+```swift
+ToolbarItem(placement: .topBarTrailing) {
+    Image(systemName: "person.circle.fill")
+        .sharedBackgroundVisibility(.hidden)
+}
+```
+
+**Use `badge(_:)` on toolbar item content to display an indicator.**
+
+```swift
+ToolbarItem(placement: .topBarTrailing) {
+    Button("Notifications", systemImage: "bell") { }
+        .badge(unreadCount)
+}
+```
+
+> Source: "Build a SwiftUI app with the new design" (WWDC25, session 323)
+
+### Search
+
+**Use `searchToolbarBehavior(.minimizable)` to opt into a minimized search button.** The system may automatically minimize search into a toolbar button depending on available space. Use this modifier to explicitly opt in.
+
+```swift
+NavigationStack {
+    ContentView()
+        .searchable(text: $query)
+        .searchToolbarBehavior(.minimizable)
+}
+```
+
+> Source: "Build a SwiftUI app with the new design" (WWDC25, session 323)
+
+### Animations
+
+**Use `@Animatable` macro instead of manual `animatableData` declarations.** The macro auto-synthesizes `animatableData` from all animatable properties. Use `@AnimatableIgnored` to exclude specific properties.
+
+```swift
+// Modern (iOS 26+)
+@Animatable
+struct Wedge: Shape {
+    var startAngle: Angle
+    var endAngle: Angle
+    @AnimatableIgnored var drawClockwise: Bool
+
+    func path(in rect: CGRect) -> Path { /* ... */ }
+}
+
+// Legacy — manual animatableData
+struct Wedge: Shape {
+    var startAngle: Angle
+    var endAngle: Angle
+    var drawClockwise: Bool
+
+    var animatableData: AnimatablePair<Double, Double> {
+        get { AnimatablePair(startAngle.radians, endAngle.radians) }
+        set {
+            startAngle = .radians(newValue.first)
+            endAngle = .radians(newValue.second)
+        }
+    }
+
+    func path(in rect: CGRect) -> Path { /* ... */ }
+}
+```
+
+> Source: "What's new in SwiftUI" (WWDC25, session 256)
+
+### Presentations
+
+**Use `navigationZoomTransition` to morph sheets out of their source view.** Toolbar items and buttons can serve as the transition source.
+
+```swift
+.toolbar {
+    ToolbarItem {
+        Button("Add", systemImage: "plus") { showSheet = true }
+            .navigationTransitionSource(id: "addSheet", namespace: namespace)
+    }
+}
+.sheet(isPresented: $showSheet) {
+    AddItemView()
+        .navigationTransitionDestination(id: "addSheet", namespace: namespace)
+}
+```
+
+> Source: "Build a SwiftUI app with the new design" (WWDC25, session 323)
+
+### Controls
+
+**Use `controlSize(.extraLarge)` for extra-large prominent action buttons.**
+
+```swift
+Button("Get Started") { }
+    .buttonStyle(.borderedProminent)
+    .controlSize(.extraLarge)
+```
+
+**Use `concentric` corner style for buttons that match their container's corners.**
+
+```swift
+Button("Confirm") { }
+    .clipShape(.rect(cornerRadius: 12, style: .concentric))
+```
+
+**Sliders now support tick marks and a neutral value.**
+
+```swift
+Slider(value: $speed, in: 0.5...2.0, step: 0.25) {
+    Text("Speed")
+} ticks: {
+    SliderTick(value: 0.6)
+    SliderTick(value: 0.9)
+}
+.sliderNeutralValue(1.0)
+```
+
+> Source: "Build a SwiftUI app with the new design" (WWDC25, session 323)
+
+### Rich Text
+
+**Use `TextEditor` with an `AttributedString` binding for rich text editing.** Supports bold, italic, underline, strikethrough, custom fonts, foreground/background colors, paragraph styles, and Genmoji.
+
+```swift
+@State private var text: AttributedString = "Hello, world!"
+
+var body: some View {
+    TextEditor(text: $text)
+}
+```
+
+> Source: "Cook up a rich text experience in SwiftUI with AttributedString" (WWDC25, session 280)
+
+### Web Content
+
+**Use `WebView` to display web content.** For richer interaction, create a `WebPage` observable model.
+
+```swift
+// Simple URL display
+WebView(url: URL(string: "https://example.com")!)
+
+// With observable model
+@State private var page = WebPage()
+
+WebView(page)
+    .onAppear { page.load(URLRequest(url: myURL)) }
+    .navigationTitle(page.title ?? "")
+```
+
+> Source: "Meet WebKit for SwiftUI" (WWDC25, session 231)
+
+### Drag and Drop
+
+**Use `dragContainer` for multi-item drag operations.** Combine with `DragConfiguration` for custom drag behavior and `onDragSessionUpdated` to observe events.
+
+```swift
+PhotoGrid(photos: photos)
+    .dragContainer(for: Photo.self) { selection in
+        return selection.map { $0.transferable }
+    }
+    .onDragSessionUpdated { session in
+        if session.phase == .endedWithDelete {
+            deleteSelectedPhotos()
+        }
+    }
+```
+
+> Source: "What's new in SwiftUI" (WWDC25, session 256)
+
+### Scene Bridging
+
+**UIKit and AppKit lifecycle apps can now request SwiftUI scenes.** This enables using SwiftUI-only scene types like `MenuBarExtra` and `ImmersiveSpace` from imperative lifecycle apps.
+
+```swift
+// In your SwiftUI App, declare the scene
+@main
+struct MyApp: App {
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
+
+        #if os(macOS)
+        MenuBarExtra("Quick Actions", systemImage: "star") {
+            QuickActionsView()
+        }
+        #endif
+    }
+}
+
+// From a UIKit-based app, request the SwiftUI scene
+UIApplication.shared.activateSceneSession(
+    for: .init(role: .windowApplication),
+    errorHandler: { error in
+        print("Failed to activate scene: \(error)")
+    }
+)
+```
+
+> Source: "What's new in SwiftUI" (WWDC25, session 256)
 
 ---
 
@@ -602,3 +849,6 @@ TabView {
 | `coordinateSpace(name:)` | `coordinateSpace(.named(...))` | iOS 17+ |
 | `ObservableObject` | `@Observable` | iOS 17+ |
 | `tabItem(_:)` | `Tab` API | iOS 18+ |
+| Manual `animatableData` | `@Animatable` macro | iOS 26+ |
+| `presentationBackground(_:)` on sheets | Default Liquid Glass sheet material | iOS 26+ |
+| Custom toolbar background hacks | `scrollEdgeEffectStyle(_:for:)` | iOS 26+ |

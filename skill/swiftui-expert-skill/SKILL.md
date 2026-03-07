@@ -66,6 +66,8 @@ Use this skill to build, review, or improve SwiftUI features with correct state 
 ### Performance
 - Pass only needed values to views (avoid large "config" or "context" objects)
 - Eliminate unnecessary dependencies to reduce update fan-out
+- Consider per-item `@Observable` state objects in lists to narrow update/dependency scope
+- Consider whether frequently-changing values belong in the environment; prefer more local state when it reduces unnecessary view updates
 - Check for value changes before assigning state in hot paths
 - Avoid redundant state updates in `onReceive`, `onChange`, scroll handlers
 - Minimize work in frequently executed code paths
@@ -79,13 +81,15 @@ Use this skill to build, review, or improve SwiftUI features with correct state 
 - Avoid layout thrash (deep hierarchies, excessive `GeometryReader`)
 - Gate frequent geometry updates by thresholds
 - Use `Self._logChanges()` or `Self._printChanges()` to debug unexpected view updates
+- `Shape.path()`, `visualEffect`, `Layout`, and `onGeometryChange` closures may run off the main thread — capture values instead of accessing `@MainActor` state
 
 ### Animations
 - Use `.animation(_:value:)` with value parameter (deprecated version without value is too broad)
 - Use `withAnimation` for event-driven animations (button taps, gestures)
 - Prefer transforms (`offset`, `scale`, `rotation`) over layout changes (`frame`) for performance
 - Transitions require animations outside the conditional structure
-- Custom `Animatable` implementations must have explicit `animatableData`
+- Custom `Animatable` implementations must have explicit `animatableData` (or use `@Animatable` macro on iOS 26+)
+- iOS 26+: Use `@Animatable` macro to auto-synthesize `animatableData`; use `@AnimatableIgnored` to exclude properties
 - Use `.phaseAnimator` for multi-step sequences (iOS 17+)
 - Use `.keyframeAnimator` for precise timing control (iOS 17+)
 - Animation completion handlers need `.transaction(value:)` for reexecution
@@ -175,10 +179,12 @@ Button("Confirm") { }
 - [ ] View `body` kept simple and pure (no side effects)
 - [ ] Passing only needed values (not large config objects)
 - [ ] Eliminating unnecessary dependencies
+- [ ] Consider making @Observable dependencies as granular as needed (for example, per-item data for list rows) when it helps performance
 - [ ] State updates check for value changes before assigning
 - [ ] Hot paths minimize state updates
 - [ ] No object creation in `body`
 - [ ] Heavy computation moved out of `body`
+- [ ] Sendable closures capture values instead of accessing @MainActor state
 
 ### List Patterns (see `references/list-patterns.md`)
 - [ ] ForEach uses stable identity (not `.indices`)
@@ -198,7 +204,7 @@ Button("Confirm") { }
 - [ ] Using `.animation(_:value:)` with value parameter
 - [ ] Using `withAnimation` for event-driven animations
 - [ ] Transitions paired with animations outside conditional structure
-- [ ] Custom `Animatable` has explicit `animatableData` implementation
+- [ ] Custom `Animatable` has explicit `animatableData` (or `@Animatable` macro on iOS 26+)
 - [ ] Preferring transforms over layout changes for animation performance
 - [ ] Phase animations for multi-step sequences (iOS 17+)
 - [ ] Keyframe animations for precise timing (iOS 17+)
@@ -227,7 +233,7 @@ Button("Confirm") { }
 - `references/accessibility-patterns.md` - Accessibility traits, grouping, Dynamic Type, and VoiceOver
 - `references/animation-basics.md` - Core animation concepts, implicit/explicit animations, timing, performance
 - `references/animation-transitions.md` - Transitions, custom transitions, Animatable protocol
-- `references/animation-advanced.md` - Transactions, phase/keyframe animations (iOS 17+), completion handlers (iOS 17+)
+- `references/animation-advanced.md` - Transactions, phase/keyframe animations (iOS 17+), completion handlers (iOS 17+), `@Animatable` macro (iOS 26+)
 - `references/sheet-navigation-patterns.md` - Sheet presentation and navigation patterns
 - `references/scroll-patterns.md` - ScrollView patterns and programmatic scrolling
 - `references/image-optimization.md` - AsyncImage, image downsampling, and optimization

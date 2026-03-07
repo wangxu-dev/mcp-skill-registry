@@ -1,0 +1,8 @@
+{
+  "name": "deploy-to-vercel",
+  "description": "Deploy applications and websites to Vercel. Use when the user requests deployment actions like \"deploy my app\", \"deploy and give me the link\", \"push this live\", or \"create a preview deployment\".",
+  "version": "3.0.0",
+  "head": "64bee5b7ea30702448e2aed774eb361914029944",
+  "updatedAt": "2026-03-07T04:04:41Z",
+  "checkedAt": "2026-03-07T04:04:41Z"
+}

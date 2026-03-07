@@ -178,6 +178,10 @@ ScrollView {
 }
 ```
 
+**iOS 26+ note**: Nested scroll views containing lazy stacks now automatically defer loading their children until they are about to appear, matching the behavior of top-level lazy stacks. This benefits patterns like horizontal photo carousels inside a vertical scroll view.
+
+> Source: "What's new in SwiftUI" (WWDC25, session 256)
+
 ### 7. Task Cancellation
 
 Cancel async work when view disappears:
@@ -266,7 +270,89 @@ struct ItemRow: View {
 
 **Why**: With `ObservableObject`, any `@Published` property change triggers all observers. With `@Observable`, views update when accessed properties change, but passing entire models still creates broader dependencies than necessary.
 
-### 10. Common Performance Issues
+**Avoid storing frequently-changing values in the environment.** Even when a view doesn't read the changed environment key, SwiftUI still checks whether the value it reads has changed. This checking cost adds up when many views read from the environment and updates are frequent (e.g., geometry values, timers).
+
+> Source: "Optimize SwiftUI performance with Instruments" (WWDC25, session 306)
+
+### 10. @Observable Dependency Granularity
+
+**Consider per-item `@Observable` state holders (one per row/item) to narrow update scope.** When multiple list items share a dependency on the same `@Observable` array, changing one element causes all items to re-evaluate their bodies.
+
+```swift
+// BAD - all item views depend on the full favorites array
+@Observable
+class ModelData {
+    var favorites: [Landmark] = []
+
+    func isFavorite(_ landmark: Landmark) -> Bool {
+        favorites.contains(landmark)
+    }
+}
+
+struct LandmarkRow: View {
+    let landmark: Landmark
+    @Environment(ModelData.self) private var model
+
+    var body: some View {
+        HStack {
+            Text(landmark.name)
+            if model.isFavorite(landmark) {
+                Image(systemName: "heart.fill")
+            }
+        }
+    }
+}
+
+// GOOD - each item has its own observable view model
+@Observable
+class LandmarkViewModel {
+    var isFavorite: Bool = false
+}
+
+struct LandmarkRow: View {
+    let landmark: Landmark
+    let viewModel: LandmarkViewModel
+
+    var body: some View {
+        HStack {
+            Text(landmark.name)
+            if viewModel.isFavorite {
+                Image(systemName: "heart.fill")
+            }
+        }
+    }
+}
+```
+
+**Why**: With the bad pattern, toggling one favorite marks the entire array as changed, causing every `LandmarkRow` to re-run its body. With per-item view models, only the toggled item's body runs.
+
+> Source: "Optimize SwiftUI performance with Instruments" (WWDC25, session 306)
+
+### 11. Off-Main-Thread Closures
+
+**SwiftUI may call certain closures on a background thread for performance.** These closures must be `Sendable` and should avoid accessing `@MainActor`-isolated state directly. Instead, capture needed values in the closure's capture list.
+
+Closures that may run off the main thread:
+- `Shape.path(in:)`
+- `visualEffect` closure
+- `Layout` protocol methods
+- `onGeometryChange` transform closure
+
+```swift
+// BAD - accessing @MainActor state directly
+.visualEffect { content, geometry in
+    content.blur(radius: self.pulse ? 5 : 0)  // Compiler error: @MainActor isolated
+}
+
+// GOOD - capture the value
+.visualEffect { [pulse] content, geometry in
+    content.blur(radius: pulse ? 5 : 0)
+}
+```
+
+> Source: "Explore concurrency in SwiftUI" (WWDC25, session 266)
+
+### 12. Common Performance Issues
 
 **Be aware of common performance bottlenecks in SwiftUI:**
 
@@ -382,3 +468,6 @@ var itemCount: Int { items.count }  // Computed property
 - [ ] Use `Self._logChanges()` or `Self._printChanges()` to debug unexpected updates
 - [ ] Equatable conformance for expensive views (when appropriate)
 - [ ] Consider POD view wrappers for advanced optimization
+- [ ] Consider using granular @Observable dependencies for list items (smaller observable units per row when it measurably reduces updates)
+- [ ] Frequently-changing values not stored in the environment
+- [ ] Sendable closures (Shape, visualEffect, Layout) capture values instead of accessing @MainActor state
