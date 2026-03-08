@@ -295,6 +295,29 @@ ZStack(alignment: .topTrailing) {
 }
 ```
 
+## Compositing Group Before Clipping
+
+**Always add `.compositingGroup()` before `.clipShape()` when clipping layered views (`.overlay` or `.background`).** Without it, each layer is antialiased separately and then composited. Where antialiased edges overlap — typically at rounded corners — you get visible color fringes (semi-transparent pixels of different colors blending together).
+
+```swift
+let shape = RoundedRectangle(cornerRadius: 16)
+
+// BAD - each layer antialiased separately, producing color fringes at corners
+Color.red
+    .overlay(.white, in: shape)
+    .clipShape(shape)
+    .frame(width: 200, height: 150)
+
+// GOOD - layers composited first, antialiasing applied once during clipping
+Color.red
+    .overlay(.white, in: .rect)
+    .compositingGroup()
+    .clipShape(shape)
+    .frame(width: 200, height: 150)
+```
+
+`.compositingGroup()` forces all child layers to be rendered into a single offscreen buffer before the clip is applied. This means antialiasing only happens once — on the final composited result — eliminating the fringe artifacts.
+
 ## Reusable Styling with ViewModifier
 
 Extract repeated modifier combinations into a `ViewModifier` struct. Expose via a `View` extension for autocompletion:
@@ -410,4 +433,5 @@ struct MapView: UIViewRepresentable {
 - [ ] Reusable styling extracted into `ViewModifier` or `ButtonStyle`
 - [ ] Custom styles exposed via static member lookup for discoverability
 - [ ] Use `.redacted(reason: .placeholder)` for skeleton loading states
+- [ ] `.compositingGroup()` before `.clipShape()` on layered views (overlay/background) to avoid antialiasing fringes
 - [ ] UIViewRepresentable: heavy work in make/update, not in struct init
