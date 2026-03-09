@@ -2,6 +2,6 @@
   "name": "claude-api",
   "description": "Build apps with the Claude API or Anthropic SDK. TRIGGER when: code imports `anthropic`/`@anthropic-ai/sdk`/`claude_agent_sdk`, or user asks to use Claude API, Anthropic SDKs, or Agent SDK. DO NOT TRIGGER when: code imports `openai`/other AI SDK, general programming, or ML/data-science tasks.",
   "head": "b0cbd3df1533b396d281a6886d5132f623393a9c",
-  "updatedAt": "2026-03-08T04:17:06Z",
-  "checkedAt": "2026-03-08T04:17:06Z"
+  "updatedAt": "2026-03-09T04:23:24Z",
+  "checkedAt": "2026-03-09T04:23:24Z"
 }
