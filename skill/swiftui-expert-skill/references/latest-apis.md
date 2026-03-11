@@ -15,259 +15,74 @@
 
 These APIs have been deprecated long enough that there is no reason to use the old variants.
 
-### Navigation
+### Compact Replacements
 
-**Always use `navigationTitle(_:)` instead of `navigationBarTitle(_:)`.**
+These replacements have minimal API shape changes. Most are near-direct swaps; a few require an additional parameter or structural adjustment:
 
-```swift
-// Modern
-NavigationStack {
-    List { /* ... */ }
-        .navigationTitle("Flavors")
-}
-
-// Deprecated
-NavigationView {
-    List { /* ... */ }
-        .navigationBarTitle("Flavors")
-}
-```
-
-**Always use `toolbar { }` instead of `navigationBarItems(...)`.**
-
-```swift
-// Modern
-.toolbar {
-    ToolbarItem(placement: .topBarTrailing) {
-        Button("Add", systemImage: "plus") { addItem() }
-    }
-}
-
-// Deprecated
-.navigationBarItems(trailing:
-    Button("Add", systemImage: "plus") { addItem() }
-)
-```
-
-**Always use `toolbarVisibility(.hidden, for: .navigationBar)` instead of `navigationBarHidden(_:)`.**
-
-```swift
-// Modern
-.toolbarVisibility(.hidden, for: .navigationBar)
-
-// Deprecated
-.navigationBarHidden(true)
-```
-
-**Always use `statusBarHidden(_:)` instead of `statusBar(hidden:)`.**
-
-```swift
-// Modern
-.statusBarHidden(true)
-
-// Deprecated
-.statusBar(hidden: true)
-```
-
-### Layout
-
-**Always use `ignoresSafeArea(_:edges:)` instead of `edgesIgnoringSafeArea(_:)`.**
-
-```swift
-// Modern
-Color.blue
-    .ignoresSafeArea(.all, edges: .top)
-
-// Deprecated
-Color.blue
-    .edgesIgnoringSafeArea(.top)
-```
-
-### Appearance
-
-**Always use `preferredColorScheme(_:)` instead of `colorScheme(_:)`.**
-
-```swift
-// Modern
-.preferredColorScheme(.dark)
-
-// Deprecated
-.colorScheme(.dark)
-```
-
-**Always use `foregroundStyle()` instead of `foregroundColor()`.**
-
-```swift
-// Modern
-Text("Hello")
-    .foregroundStyle(.primary)
-
-// Deprecated
-Text("Hello")
-    .foregroundColor(.primary)
-```
+- **`navigationTitle(_:)`** instead of `navigationBarTitle(_:)`
+- **`toolbar { ToolbarItem(...) }`** instead of `navigationBarItems(...)` (structural change)
+- **`toolbarVisibility(.hidden, for: .navigationBar)`** instead of `navigationBarHidden(_:)`
+- **`statusBarHidden(_:)`** instead of `statusBar(hidden:)`
+- **`ignoresSafeArea(_:edges:)`** instead of `edgesIgnoringSafeArea(_:)`
+- **`preferredColorScheme(_:)`** instead of `colorScheme(_:)`
+- **`foregroundStyle(_:)`** instead of `foregroundColor(_:)` (e.g., `.foregroundStyle(.primary)`)
+- **`clipShape(.rect(cornerRadius:))`** instead of `cornerRadius()`
+- **`textInputAutocapitalization(_:)`** instead of `autocapitalization(_:)` (note: `.never` replaces `.none`)
+- **`animation(_:value:)`** instead of `animation(_:)` (adds required `value:` parameter; back-deploys to iOS 13+)
 
 ### Presentation
 
-**Always use `confirmationDialog(...)` instead of `actionSheet(...)`.**
+- **Always use `.confirmationDialog(_:isPresented:actions:message:)`** instead of `actionSheet(...)`.
+- **Always use `.alert(_:isPresented:actions:message:)`** instead of `alert(isPresented:content:)`.
+
+Both take a title `String`, `isPresented: Binding<Bool>`, an `actions` builder with `Button` items (supporting `role: .destructive` / `.cancel`), and an optional `message` builder:
 
 ```swift
-// Modern
-.confirmationDialog("Choose Option", isPresented: $showOptions) {
-    Button("Option A") { selectA() }
-    Button("Option B") { selectB() }
-    Button("Cancel", role: .cancel) { }
-} message: {
-    Text("Select your preferred option.")
-}
-
-// Deprecated
-.actionSheet(isPresented: $showOptions) {
-    ActionSheet(title: Text("Choose Option"), buttons: [
-        .default(Text("Option A")) { selectA() },
-        .default(Text("Option B")) { selectB() },
-        .cancel()
-    ])
-}
-```
-
-**Always use the modern `alert(_:isPresented:actions:message:)` instead of `alert(isPresented:content:)`.**
-
-```swift
-// Modern
-.alert("Delete Item", isPresented: $showAlert) {
+.alert("Delete Item?", isPresented: $showAlert) {
     Button("Delete", role: .destructive) { deleteItem() }
     Button("Cancel", role: .cancel) { }
 } message: {
     Text("This action cannot be undone.")
 }
-
-// Deprecated
-.alert(isPresented: $showAlert) {
-    Alert(
-        title: Text("Delete Item"),
-        message: Text("This action cannot be undone."),
-        destructiveButton: .destructive(Text("Delete")) { deleteItem() },
-        dismissButton: .cancel()
-    )
-}
 ```
 
 ### Text Input
 
-**Always use `textInputAutocapitalization(_:)` instead of `autocapitalization(_:)`.**
-
-```swift
-// Modern
-TextField("Username", text: $username)
-    .textInputAutocapitalization(.never)
-
-// Deprecated
-TextField("Username", text: $username)
-    .autocapitalization(.none)
-```
-
 **Always use `onSubmit(of:_:)` and `focused(_:equals:)` instead of `TextField` `onEditingChanged`/`onCommit` callbacks.**
 
 ```swift
-// Modern
 @FocusState private var isFocused: Bool
 
 TextField("Search", text: $query)
     .focused($isFocused)
     .onSubmit { performSearch() }
-
-// Deprecated
-TextField("Search", text: $query,
-    onEditingChanged: { editing in /* ... */ },
-    onCommit: { performSearch() }
-)
 ```
 
 ### Accessibility
 
-**Always use dedicated accessibility modifiers instead of the generic `accessibility(...)` variants.**
-
-```swift
-// Modern
-Text("Score")
-    .accessibilityLabel("Current score")
-    .accessibilityValue("\(score) points")
-    .accessibilityHint("Double-tap to reset")
-    .accessibilityAddTraits(.isButton)
-    .accessibilityHidden(false)
-
-// Deprecated
-Text("Score")
-    .accessibility(label: Text("Current score"))
-    .accessibility(value: Text("\(score) points"))
-    .accessibility(hint: Text("Double-tap to reset"))
-    .accessibility(addTraits: .isButton)
-    .accessibility(hidden: false)
-```
+**Always use dedicated accessibility modifiers instead of the generic `accessibility(...)` variants.** Use `.accessibilityLabel()`, `.accessibilityValue()`, `.accessibilityHint()`, `.accessibilityAddTraits()`, `.accessibilityHidden()` instead of `.accessibility(label:)`, `.accessibility(value:)`, etc.
 
 ### Custom Environment / Container Values
 
 **Always use the `@Entry` macro instead of manual `EnvironmentKey` conformance.** The `@Entry` macro was introduced in Xcode 16 and back-deploys to all OS versions.
 
 ```swift
-// Modern
+// Modern — one line replaces ~10 lines of EnvironmentKey boilerplate
 extension EnvironmentValues {
     @Entry var myCustomValue: String = "Default value"
-}
-
-// Legacy (unnecessary boilerplate)
-struct MyCustomValueKey: EnvironmentKey {
-    static let defaultValue: String = "Default value"
-}
-
-extension EnvironmentValues {
-    var myCustomValue: String {
-        get { self[MyCustomValueKey.self] }
-        set { self[MyCustomValueKey.self] = newValue }
-    }
 }
 ```
 
 ### Styling
 
-**Always use `clipShape(.rect(cornerRadius:))` instead of `cornerRadius()`.**
-
-```swift
-// Modern
-Image("photo")
-    .clipShape(.rect(cornerRadius: 12))
-
-// Deprecated
-Image("photo")
-    .cornerRadius(12)
-```
-
 **Always use `Button` instead of `onTapGesture()` unless you need tap location or count.**
 
 ```swift
-// Modern
 Button("Tap me") { performAction() }
 
 // Use onTapGesture only when you need location or count
 Image("photo")
     .onTapGesture(count: 2) { handleDoubleTap() }
-```
-
-### Animation
-
-**Always use `animation(_:value:)` instead of `animation(_:)` without a value parameter.** The value-based variant back-deploys to iOS 13+.
-
-```swift
-// Modern
-Circle()
-    .scaleEffect(isExpanded ? 1.5 : 1.0)
-    .animation(.spring, value: isExpanded)
-
-// Deprecated — applies to all animatable values (too broad)
-Circle()
-    .scaleEffect(isExpanded ? 1.5 : 1.0)
-    .animation(.spring)
 ```
 
 ---
@@ -276,80 +91,30 @@ Circle()
 
 ### Navigation
 
-**Use `NavigationStack` (or `NavigationSplitView`) instead of `NavigationView`.**
+**Use `NavigationStack` (or `NavigationSplitView`) instead of `NavigationView`.** Value-based `NavigationLink(value:)` with `.navigationDestination(for:)` replaces destination-based links.
 
 ```swift
-// Modern
 NavigationStack {
     List(items) { item in
-        NavigationLink(value: item) {
-            Text(item.name)
-        }
+        NavigationLink(value: item) { Text(item.name) }
     }
-    .navigationDestination(for: Item.self) { item in
-        DetailView(item: item)
-    }
-}
-
-// Deprecated
-NavigationView {
-    List(items) { item in
-        NavigationLink(destination: DetailView(item: item)) {
-            Text(item.name)
-        }
-    }
+    .navigationDestination(for: Item.self) { DetailView(item: $0) }
 }
 ```
 
-### Appearance
+### Simple Renames
 
-**Use `tint(_:)` instead of `accentColor(_:)`.**
-
-```swift
-// Modern
-VStack {
-    Button("Accented") { }
-    Slider(value: $value)
-}
-.tint(.purple)
-
-// Deprecated
-VStack {
-    Button("Accented") { }
-    Slider(value: $value)
-}
-.accentColor(.purple)
-```
-
-### Text Input
-
-**Use `autocorrectionDisabled(_:)` instead of `disableAutocorrection(_:)`.**
-
-```swift
-// Modern
-TextField("Code", text: $code)
-    .autocorrectionDisabled()
-
-// Deprecated
-TextField("Code", text: $code)
-    .disableAutocorrection(true)
-```
+- **`tint(_:)`** instead of `accentColor(_:)`
+- **`autocorrectionDisabled(_:)`** instead of `disableAutocorrection(_:)`
 
 ### Clipboard
 
-**Prefer `PasteButton` for user-initiated paste UI to avoid paste prompts; use `UIPasteboard` when you need non-button or non-`Transferable` clipboard access.**
-
-`PasteButton` is a system-provided SwiftUI control that reads clipboard content using `Transferable` payloads. It requires a visible, user-tappable button, handles permissions automatically for that interaction, and avoids the paste permission prompt that direct `UIPasteboard` access can trigger.
+**Prefer `PasteButton` for user-initiated paste UI** to avoid paste prompts. It handles permissions automatically. Use `UIPasteboard` only when you need programmatic or non-`Transferable` clipboard access (triggers the paste permission prompt).
 
 ```swift
-// Preferred for user-initiated paste in SwiftUI
 PasteButton(payloadType: String.self) { strings in
     pastedText = strings.first ?? ""
 }
-
-// Use when you need programmatic / non-button access or non-`Transferable` payloads.
-// Be aware: this can trigger the system paste permission prompt.
-let text = UIPasteboard.general.string
 ```
 
 ---
@@ -358,36 +123,7 @@ let text = UIPasteboard.general.string
 
 ### State Management
 
-**Prefer `@Observable` over `ObservableObject` for new code.**
-
-```swift
-// Modern (iOS 17+)
-@Observable
-class UserProfile {
-    var name: String = ""
-    var email: String = ""
-}
-
-struct ProfileView: View {
-    @State private var profile = UserProfile()
-    var body: some View {
-        TextField("Name", text: $profile.name)
-    }
-}
-
-// Legacy
-class UserProfile: ObservableObject {
-    @Published var name: String = ""
-    @Published var email: String = ""
-}
-
-struct ProfileView: View {
-    @StateObject private var profile = UserProfile()
-    var body: some View {
-        TextField("Name", text: $profile.name)
-    }
-}
-```
+- **Prefer `@Observable` over `ObservableObject` for new code.** Use `@State` instead of `@StateObject`; use `@Bindable` instead of `@ObservedObject`. See `state-management.md` for full `@Observable` migration patterns.
 
 ### Events
 
@@ -395,133 +131,32 @@ struct ProfileView: View {
 
 The deprecated variant passes only the new value. The modern variants provide either both old and new values, or a no-parameter closure.
 
-```swift
-// Modern — no-parameter closure (most common)
-.onChange(of: playState) {
-    model.playStateDidChange(state: playState)
-}
-
-// Modern — old and new values
-.onChange(of: selectedTab) { oldTab, newTab in
-    analytics.trackTabChange(from: oldTab, to: newTab)
-}
-
-// Modern — with initial trigger
-.onChange(of: searchText, initial: true) {
-    performSearch()
-}
-
-// Deprecated
-.onChange(of: playState) { newValue in
-    model.playStateDidChange(state: newValue)
-}
-```
+- **No-parameter** (most common): `.onChange(of: value) { doSomething() }`
+- **Old and new values**: `.onChange(of: value) { old, new in ... }`
+- **With initial trigger**: `.onChange(of: value, initial: true) { ... }`
+- **Deprecated**: `.onChange(of: value) { newValue in ... }` — single-parameter closure
 
 ### Gestures
 
-**Use `MagnifyGesture` instead of `MagnificationGesture`.**
-
-```swift
-// Modern
-Image("photo")
-    .gesture(
-        MagnifyGesture()
-            .onChanged { value in
-                scale = value.magnification
-            }
-    )
-
-// Deprecated
-Image("photo")
-    .gesture(
-        MagnificationGesture()
-            .onChanged { value in
-                scale = value
-            }
-    )
-```
-
-**Use `RotateGesture` instead of `RotationGesture`.**
-
-```swift
-// Modern
-Image("photo")
-    .gesture(
-        RotateGesture()
-            .onChanged { value in
-                angle = value.rotation
-            }
-    )
-
-// Deprecated
-Image("photo")
-    .gesture(
-        RotationGesture()
-            .onChanged { value in
-                angle = value
-            }
-    )
-```
+- **`MagnifyGesture`** instead of `MagnificationGesture` (access magnitude via `value.magnification`)
+- **`RotateGesture`** instead of `RotationGesture` (access angle via `value.rotation`)
 
 ### Layout
 
 **Consider `containerRelativeFrame()` or `visualEffect()` as alternatives to `GeometryReader` for sizing and position-based effects.** `GeometryReader` is not deprecated and remains necessary for many measurement-based layouts.
 
 ```swift
-// Modern — containerRelativeFrame
 Image("hero")
     .resizable()
-    .containerRelativeFrame(.horizontal) { length, axis in
-        length * 0.8
-    }
-
-// Modern — visualEffect for position-based effects
-Text("Parallax")
-    .visualEffect { content, geometry in
-        content.offset(y: geometry.frame(in: .global).minY * 0.5)
-    }
-
-// Legacy — only use if necessary
-GeometryReader { geometry in
-    Image("hero")
-        .frame(width: geometry.size.width * 0.8)
-}
+    .containerRelativeFrame(.horizontal) { length, axis in length * 0.8 }
 ```
 
-**Consider `onGeometryChange(for:of:action:)` when you need to react to geometry changes of a specific view.** It reports changes for the view you attach it to, and is useful for driving state/effects from geometry updates. `GeometryReader` is still useful when layout itself depends on geometry.
-
-```swift
-// Size
-Text("Long large text")
-    .onGeometryChange(for: CGSize.self) { geometry in
-        return geometry.size
-    } action: { newValue in
-        // Handle size
-    }
-
-// Offset
-VStack {
-    Text("Long large text")
-        .onGeometryChange(for: CGFloat.self) { geometry in
-            return geometry.frame(in: .named("stack")).minY
-        } action: { newValue in
-            // Handle offset
-        }
-}
-.coordinateSpace(.named("stack"))
-```
-
-**Use `coordinateSpace(_:)` with `NamedCoordinateSpace` instead of `coordinateSpace(name:)`.**
-
-```swift
-// Modern
-VStack { /* ... */ }
-    .coordinateSpace(.named("stack"))
-
-// Deprecated
-VStack { /* ... */ }
-    .coordinateSpace(name: "stack")
-```
+- **`visualEffect { content, geometry in ... }`** — position-based effects (parallax, offsets) without a `GeometryReader` wrapper.
+- **`onGeometryChange(for:of:action:)`** — react to geometry changes of a specific view; useful for driving state/effects. `GeometryReader` is still better when layout itself depends on geometry. Note the two-closure shape:
+  ```swift
+  .onGeometryChange(for: CGFloat.self) { proxy in proxy.size.height } action: { newHeight in height = newHeight }
+  ```
+- **`.coordinateSpace(.named("scroll"))`** instead of `.coordinateSpace(name: "scroll")`.
 
 ---
 
@@ -532,32 +167,10 @@ VStack { /* ... */ }
 **Use the `Tab` API instead of `tabItem(_:)`.**
 
 ```swift
-// Modern (iOS 18+)
 TabView {
-    Tab("Home", systemImage: "house") {
-        HomeView()
-    }
-
-    Tab("Search", systemImage: "magnifyingglass") {
-        SearchView()
-    }
-
-    Tab("Profile", systemImage: "person") {
-        ProfileView()
-    }
-}
-
-// Legacy
-TabView {
-    HomeView()
-        .tabItem {
-            Label("Home", systemImage: "house")
-        }
-
-    SearchView()
-        .tabItem {
-            Label("Search", systemImage: "magnifyingglass")
-        }
+    Tab("Home", systemImage: "house") { HomeView() }
+    Tab("Search", systemImage: "magnifyingglass") { SearchView() }
+    Tab("Profile", systemImage: "person") { ProfileView() }
 }
 ```
 
@@ -697,29 +310,11 @@ NavigationStack {
 **Use `@Animatable` macro instead of manual `animatableData` declarations.** The macro auto-synthesizes `animatableData` from all animatable properties. Use `@AnimatableIgnored` to exclude specific properties.
 
 ```swift
-// Modern (iOS 26+)
 @Animatable
 struct Wedge: Shape {
     var startAngle: Angle
     var endAngle: Angle
     @AnimatableIgnored var drawClockwise: Bool
-
-    func path(in rect: CGRect) -> Path { /* ... */ }
-}
-
-// Legacy — manual animatableData
-struct Wedge: Shape {
-    var startAngle: Angle
-    var endAngle: Angle
-    var drawClockwise: Bool
-
-    var animatableData: AnimatablePair<Double, Double> {
-        get { AnimatablePair(startAngle.radians, endAngle.radians) }
-        set {
-            startAngle = .radians(newValue.first)
-            endAngle = .radians(newValue.second)
-        }
-    }
 
     func path(in rect: CGRect) -> Path { /* ... */ }
 }
@@ -829,33 +424,7 @@ PhotoGrid(photos: photos)
 
 ### Scene Bridging
 
-**UIKit and AppKit lifecycle apps can now request SwiftUI scenes.** This enables using SwiftUI-only scene types like `MenuBarExtra` and `ImmersiveSpace` from imperative lifecycle apps.
-
-```swift
-// In your SwiftUI App, declare the scene
-@main
-struct MyApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
-
-        #if os(macOS)
-        MenuBarExtra("Quick Actions", systemImage: "star") {
-            QuickActionsView()
-        }
-        #endif
-    }
-}
-
-// From a UIKit-based app, request the SwiftUI scene
-UIApplication.shared.activateSceneSession(
-    for: .init(role: .windowApplication),
-    errorHandler: { error in
-        print("Failed to activate scene: \(error)")
-    }
-)
-```
+**UIKit and AppKit lifecycle apps can now request SwiftUI scenes.** This enables using SwiftUI-only scene types like `MenuBarExtra` and `ImmersiveSpace` from imperative lifecycle apps via `UIApplication.shared.activateSceneSession(for:errorHandler:)`.
 
 > Source: "What's new in SwiftUI" (WWDC25, session 256)
 
@@ -871,7 +440,7 @@ UIApplication.shared.activateSceneSession(
 | `statusBar(hidden:)` | `statusBarHidden(_:)` | iOS 15+ |
 | `edgesIgnoringSafeArea(_:)` | `ignoresSafeArea(_:edges:)` | iOS 15+ |
 | `colorScheme(_:)` | `preferredColorScheme(_:)` | iOS 15+ |
-| `foregroundColor(_:)` | `foregroundStyle()` | iOS 15+ |
+| `foregroundColor(_:)` | `foregroundStyle(_:)` | iOS 15+ |
 | `cornerRadius(_:)` | `clipShape(.rect(cornerRadius:))` | iOS 15+ |
 | `actionSheet(...)` | `confirmationDialog(...)` | iOS 15+ |
 | `alert(isPresented:content:)` | `alert(_:isPresented:actions:message:)` | iOS 15+ |

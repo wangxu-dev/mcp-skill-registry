@@ -1,5 +1,14 @@
 # SwiftUI Sheet, Navigation & Inspector Patterns Reference
 
+## Table of Contents
+
+- [Sheet Patterns](#sheet-patterns)
+- [Navigation Patterns](#navigation-patterns)
+- [Multi-Column Navigation with NavigationSplitView](#multi-column-navigation-with-navigationsplitview)
+- [Inspector](#inspector)
+- [Presentation Modifiers](#presentation-modifiers)
+- [Summary Checklist](#summary-checklist)
+
 ## Sheet Patterns
 
 ### Item-Driven Sheets (Preferred)
@@ -44,78 +53,31 @@ var body: some View {
 
 ### Sheets Own Their Actions
 
-**Sheets should handle their own dismiss and actions internally.**
+**Sheets should handle their own dismiss and actions internally** using `@Environment(\.dismiss)`. Avoid passing `onSave`/`onCancel` closures from the parent -- it creates callback prop-drilling and reduces reusability.
 
 ```swift
-// Good - sheet owns its actions
 struct EditItemSheet: View {
     @Environment(\.dismiss) private var dismiss
-    @Environment(DataStore.self) private var store
-    
     let item: Item
     @State private var name: String
-    @State private var isSaving = false
-    
+
     init(item: Item) {
         self.item = item
         _name = State(initialValue: item.name)
     }
-    
+
     var body: some View {
         NavigationStack {
-            Form {
-                TextField("Name", text: $name)
-            }
-            .navigationTitle("Edit Item")
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") {
-                        dismiss()
-                    }
+            Form { TextField("Name", text: $name) }
+                .navigationTitle("Edit Item")
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } }
+                    ToolbarItem(placement: .confirmationAction) { Button("Save") { /* save and dismiss */ } }
                 }
-                ToolbarItem(placement: .confirmationAction) {
-                    Button(isSaving ? "Saving..." : "Save") {
-                        Task { await save() }
-                    }
-                    .disabled(isSaving || name.isEmpty)
-                }
-            }
-        }
-    }
-    
-    private func save() async {
-        isSaving = true
-        await store.updateItem(item, name: name)
-        dismiss()
-    }
-}
-
-// Avoid - parent manages sheet actions via closures
-struct ParentView: View {
-    @State private var selectedItem: Item?
-    
-    var body: some View {
-        List(items) { item in
-            Button(item.name) {
-                selectedItem = item
-            }
-        }
-        .sheet(item: $selectedItem) { item in
-            EditItemSheet(
-                item: item,
-                onSave: { newName in
-                    // Parent handles save
-                },
-                onCancel: {
-                    selectedItem = nil
-                }
-            )
         }
     }
 }
 ```
-
-**Why**: Sheets that own their actions are more reusable and don't require callback prop-drilling.
 
 ### Enum-Based Sheet Management
 
@@ -212,33 +174,6 @@ enum DetailRoute: Hashable {
 }
 ```
 
-### Navigation with State Restoration
-
-```swift
-struct ContentView: View {
-    @State private var navigationPath = NavigationPath()
-    
-    var body: some View {
-        NavigationStack(path: $navigationPath) {
-            RootView()
-                .navigationDestination(for: Route.self) { route in
-                    destinationView(for: route)
-                }
-        }
-    }
-    
-    @ViewBuilder
-    private func destinationView(for route: Route) -> some View {
-        switch route {
-        case .profile:
-            ProfileView()
-        case .settings:
-            SettingsView()
-        }
-    }
-}
-```
-
 ## Multi-Column Navigation with NavigationSplitView
 
 ### Two-Column Layout
@@ -293,65 +228,12 @@ struct ContentView: View {
 }
 ```
 
-### Column Visibility Control
+### Configuration
 
-Programmatically show/hide columns:
-
-```swift
-struct ContentView: View {
-    @State private var columnVisibility = NavigationSplitViewVisibility.detailOnly
-
-    var body: some View {
-        NavigationSplitView(columnVisibility: $columnVisibility) {
-            SidebarView()
-        } detail: {
-            DetailView()
-        }
-    }
-}
-```
-
-### Column Width Customization
-
-```swift
-NavigationSplitView {
-    SidebarView()
-        .navigationSplitViewColumnWidth(min: 180, ideal: 220, max: 300)
-} detail: {
-    DetailView()
-        .navigationSplitViewColumnWidth(min: 400, ideal: 600)
-}
-```
-
-### Preferred Compact Column
-
-Control which column appears on top when the split view collapses on narrow devices (iPhone, Apple Watch):
-
-```swift
-struct ContentView: View {
-    @State private var preferredColumn = NavigationSplitViewColumn.detail
-
-    var body: some View {
-        NavigationSplitView(preferredCompactColumn: $preferredColumn) {
-            SidebarView()
-        } detail: {
-            DetailView()
-        }
-    }
-}
-```
-
-### Split View Style
-
-```swift
-NavigationSplitView {
-    SidebarView()
-} detail: {
-    DetailView()
-}
-.navigationSplitViewStyle(.balanced)       // Columns share space equally
-// .navigationSplitViewStyle(.prominentDetail) // Detail gets more space (default)
-```
+- **Column visibility**: `NavigationSplitView(columnVisibility: $visibility)` with `NavigationSplitViewVisibility` (`.detailOnly`, `.doubleColumn`, `.all`)
+- **Column widths**: `.navigationSplitViewColumnWidth(min:ideal:max:)` on each column
+- **Compact column**: `NavigationSplitView(preferredCompactColumn: $column)` to control which column shows on narrow devices
+- **Style**: `.navigationSplitViewStyle(.balanced)` or `.prominentDetail` (default)
 
 ### Platform Behavior
 
@@ -463,46 +345,7 @@ struct ContentView: View {
 }
 ```
 
-### Alert with Actions
-
-```swift
-struct ContentView: View {
-    @State private var showAlert = false
-    
-    var body: some View {
-        Button("Show Alert") {
-            showAlert = true
-        }
-        .alert("Delete Item?", isPresented: $showAlert) {
-            Button("Delete", role: .destructive) {
-                deleteItem()
-            }
-            Button("Cancel", role: .cancel) { }
-        } message: {
-            Text("This action cannot be undone.")
-        }
-    }
-}
-```
-
-### Confirmation Dialog
-
-```swift
-struct ContentView: View {
-    @State private var showDialog = false
-    
-    var body: some View {
-        Button("Show Options") {
-            showDialog = true
-        }
-        .confirmationDialog("Choose an option", isPresented: $showDialog) {
-            Button("Option 1") { handleOption1() }
-            Button("Option 2") { handleOption2() }
-            Button("Cancel", role: .cancel) { }
-        }
-    }
-}
-```
+For `alert` and `confirmationDialog` API patterns, see `latest-apis.md`.
 
 ## Summary Checklist
 

@@ -1,5 +1,20 @@
 # SwiftUI View Structure Reference
 
+## Table of Contents
+
+- [View Structure Principles](#view-structure-principles)
+- [Prefer Modifiers Over Conditional Views](#prefer-modifiers-over-conditional-views)
+- [Extract Subviews, Not Computed Properties](#extract-subviews-not-computed-properties)
+- [When @ViewBuilder Functions Are Acceptable](#when-viewbuilder-functions-are-acceptable)
+- [When to Extract Subviews](#when-to-extract-subviews)
+- [Container View Pattern](#container-view-pattern)
+- [ZStack vs overlay/background](#zstack-vs-overlaybackground)
+- [Compositing Group Before Clipping](#compositing-group-before-clipping)
+- [Reusable Styling with ViewModifier](#reusable-styling-with-viewmodifier)
+- [Skeleton Loading with Redacted Views](#skeleton-loading-with-redacted-views)
+- [UIViewRepresentable Essentials](#uiviewrepresentable-essentials)
+- [Summary Checklist](#summary-checklist)
+
 ## View Structure Principles
 
 SwiftUI's diffing algorithm compares view hierarchies to determine what needs updating. Proper view composition directly impacts performance.
@@ -142,37 +157,7 @@ struct ComplexSection: View {
 
 ## When @ViewBuilder Functions Are Acceptable
 
-Use for small, simple sections that don't affect performance:
-
-```swift
-struct SimpleView: View {
-    @State private var showDetails = false
-
-    var body: some View {
-        VStack {
-            headerSection()  // OK - simple, few views
-            if showDetails {
-                detailsSection()
-            }
-        }
-    }
-
-    @ViewBuilder
-    private func headerSection() -> some View {
-        HStack {
-            Text("Title")
-            Spacer()
-            Button("Toggle") { showDetails.toggle() }
-        }
-    }
-
-    @ViewBuilder
-    private func detailsSection() -> some View {
-        Text("Some details here")
-            .font(.caption)
-    }
-}
-```
+Use for small, simple sections (a few views, no expensive computation) that don't affect performance. `@ViewBuilder` functions work particularly well for static content that doesn't depend on any `@State` or `@Binding`, since SwiftUI won't need to diff them independently. Extract to a separate `struct` when the section is complex, depends on state, or needs to be skipped during re-evaluation.
 
 ## When to Extract Subviews
 
@@ -242,57 +227,24 @@ A key difference is **size proposal behavior**:
 
 Use `ZStack` (or another container) when the “decoration” **must explicitly participate in layout sizing**—for example, when reserving space, extending tappable/visible bounds, or preventing overlap with neighboring views.
 
-### Examples: Choosing Between overlay/background and ZStack
+### Examples
 
 ```swift
-// GOOD - correct usage
-// Decoration that should not change layout sizing belongs in overlay/background
-Button("Continue") {
-    // action
-}
-.overlay(alignment: .trailing) {
-    Image(systemName: "lock.fill")
-        .padding(.trailing, 8)
-}
+// GOOD - decoration via overlay (layout anchored to button)
+Button("Continue") { }
+    .overlay(alignment: .trailing) {
+        Image(systemName: "lock.fill").padding(.trailing, 8)
+    }
 
-// BAD - incorrect usage
-// Using ZStack when overlay/background is enough and layout sizing should remain anchored to the button
+// BAD - ZStack when overlay suffices (layout no longer anchored to button)
 ZStack(alignment: .trailing) {
-    Button("Continue") {
-        // action
-    }
-    Image(systemName: "lock.fill")
-        .padding(.trailing, 8)
+    Button("Continue") { }
+    Image(systemName: "lock.fill").padding(.trailing, 8)
 }
 
-// GOOD - correct usage
-// Capsule is taking a parent size for rendering
-HStack(spacing: 12) {
-    HStack {
-        Image(systemName: "tray")
-        Text("Inbox")
-    }
-    Text("Next")
-}
-.background {
-    Capsule()
-        .strokeBorder(.blue, lineWidth: 2)
-}
-
-// BAD - incorrect usage
-// overlay does not contribute to measured size, so the Capsule is taking all available space if no explicit size is set
-ZStack(alignment: .topTrailing) {
-    HStack(spacing: 12) {
-        HStack {
-            Image(systemName: "tray")
-            Text("Inbox")
-        }
-        Text("Next")
-    }
-
-    Capsule()
-        .strokeBorder(.blue, lineWidth: 2)
-}
+// GOOD - background shape takes parent size
+HStack(spacing: 12) { Text("Inbox"); Text("Next") }
+    .background { Capsule().strokeBorder(.blue, lineWidth: 2) }
 ```
 
 ## Compositing Group Before Clipping

@@ -1,5 +1,16 @@
 # SwiftUI Layout Best Practices Reference
 
+## Table of Contents
+
+- [Relative Layout Over Constants](#relative-layout-over-constants)
+- [Context-Agnostic Views](#context-agnostic-views)
+- [Own Your Container](#own-your-container)
+- [Layout Performance](#layout-performance)
+- [View Logic and Testability](#view-logic-and-testability)
+- [Full-Width Views](#full-width-views)
+- [Action Handlers](#action-handlers)
+- [Summary Checklist](#summary-checklist)
+
 ## Relative Layout Over Constants
 
 **Use dynamic layout calculations instead of hard-coded values.**
@@ -202,62 +213,11 @@ struct LoginView: View {
 }
 ```
 
-> **iOS 16 and earlier**: Use `ObservableObject` with `@StateObject`.
+For iOS 16 and earlier, use `ObservableObject` with `@StateObject` -- see `state-management.md` for the legacy pattern.
 
-```swift
-final class AuthService: ObservableObject {
-    @Published var email = ""
-    @Published var password = ""
-    var isValid: Bool {
-        !email.isEmpty && password.count >= 8
-    }
+Avoid embedding business logic directly in view closures (e.g., validation checks inside a `Button` action). This makes logic untestable without view instantiation.
 
-    func login() async throws {
-        // Business logic here — testable without the view
-    }
-}
-
-struct LoginView: View {
-    @StateObject private var authService = AuthService()
-
-    var body: some View {
-        Form {
-            TextField("Email", text: $authService.email)
-            SecureField("Password", text: $authService.password)
-            Button("Login") {
-                Task {
-                    try? await authService.login()
-                }
-            }
-            .disabled(!authService.isValid)
-        }
-    }
-}
-```
-
-```swift
-// Bad - logic embedded in view (not testable)
-struct LoginView: View {
-    @State private var email = ""
-    @State private var password = ""
-    
-    var body: some View {
-        Form {
-            TextField("Email", text: $email)
-            SecureField("Password", text: $password)
-            Button("Login") {
-                Task {
-                    if !email.isEmpty && password.count >= 8 {
-                        // Login logic...
-                    }
-                }
-            }
-        }
-    }
-}
-```
-
-**Note**: This is about making business logic testable, not about enforcing a specific architecture. Whether you call them services, models, or something else — the key is that logic lives outside views where it can be tested independently.
+**Note**: This is about making business logic testable, not about enforcing a specific architecture. The key is that logic lives outside views where it can be tested independently.
 
 ## Full-Width Views
 
@@ -279,38 +239,18 @@ HStack {
 
 ## Action Handlers
 
-**Separate layout from logic.** View body should reference action methods, not contain logic.
+**Separate layout from logic.** View body should reference action methods, not contain inline logic.
 
 ```swift
 // Good - action references method
-struct PublishView: View {
-    @State private var publishService = PublishService()
-    
-    var body: some View {
-        Button("Publish Project", action: publishService.handlePublish)
-    }
-}
+Button("Publish Project", action: publishService.handlePublish)
 
-// Avoid - logic in closure
-struct PublishView: View {
-    @State private var isLoading = false
-    @State private var showError = false
-    
-    var body: some View {
-        Button("Publish Project") {
-            isLoading = true
-            apiService.publish(project) { result in
-                if case .error = result {
-                    showError = true
-                }
-                isLoading = false
-            }
-        }
-    }
+// Avoid - multi-line logic in closure
+Button("Publish Project") {
+    isLoading = true
+    apiService.publish(project) { result in /* ... */ }
 }
 ```
-
-**Why**: Separating logic from layout improves readability, testability, and maintainability.
 
 ## Summary Checklist
 

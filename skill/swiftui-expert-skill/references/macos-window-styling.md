@@ -2,6 +2,17 @@
 
 > Window configuration, toolbar styles, sizing, positioning, and navigation patterns specific to macOS SwiftUI apps.
 
+## Table of Contents
+
+- [Quick Lookup Table](#quick-lookup-table)
+- [Toolbar Styles](#toolbar-styles)
+- [Window Style](#window-style)
+- [Window Sizing](#window-sizing)
+- [MenuBarExtra Style (macOS-only)](#menubarextra-style-macos-only)
+- [Navigation Layout (macOS behavior)](#navigation-layout-macos-behavior)
+- [Commands & Keyboard](#commands--keyboard)
+- [Best Practices](#best-practices)
+
 ---
 
 ## Quick Lookup Table
@@ -111,92 +122,9 @@ WindowGroup {
 
 ## Window Sizing
 
-### windowResizability
+### windowResizability, defaultSize, defaultPosition
 
-Controls whether and how a window can be resized. Affects the resize handle and the green zoom button.
-
-```swift
-// Fixed size — no resize handle, zoom button disabled
-Window("Calculator", id: "calculator") {
-    CalculatorView()
-}
-.windowResizability(.contentSize)
-
-// Flexible with minimum — resize allowed, respects min frame
-Window("Editor", id: "editor") {
-    EditorView()
-        .frame(minWidth: 400, minHeight: 300)
-}
-.windowResizability(.contentMinSize)
-
-// Automatic (default) — system decides based on content
-WindowGroup {
-    ContentView()
-}
-.windowResizability(.automatic)
-```
-
-**Options:**
-
-| Value | Behavior |
-|-------|----------|
-| `.automatic` | System decides resize behavior |
-| `.contentSize` | Fixed to content size; no user resize; zoom button disabled |
-| `.contentMinSize` | Resizable with minimum based on content's `minWidth`/`minHeight` |
-
-### defaultSize
-
-Sets the initial frame size when a user creates a new window. Subsequent windows may restore their last size.
-
-```swift
-WindowGroup {
-    ContentView()
-}
-.defaultSize(width: 800, height: 600)
-
-// Also accepts CGSize
-.defaultSize(CGSize(width: 800, height: 600))
-```
-
-### defaultPosition
-
-Sets the initial position of new windows on screen.
-
-```swift
-WindowGroup {
-    ContentView()
-}
-.defaultPosition(.center)
-
-// Available positions:
-// .center, .topLeading, .top, .topTrailing
-// .leading, .trailing
-// .bottomLeading, .bottom, .bottomTrailing
-```
-
-### windowIdealPlacement (macOS 15.0+)
-
-Provides a closure with display geometry for precise programmatic window positioning.
-
-```swift
-WindowGroup {
-    ContentView()
-}
-.windowIdealPlacement { context in
-    // Position window in the right half of the screen
-    let screenFrame = context.defaultDisplay.visibleArea
-    return WindowPlacement(
-        x: screenFrame.midX,
-        y: screenFrame.midY,
-        width: screenFrame.width / 2,
-        height: screenFrame.height
-    )
-}
-```
-
-### Combined window sizing pattern
-
-The recommended approach for configuring macOS windows:
+These modifiers work together to configure window sizing and placement:
 
 ```swift
 WindowGroup {
@@ -208,11 +136,32 @@ WindowGroup {
 .windowResizability(.contentMinSize)
 ```
 
+**`windowResizability` options:**
+
+| Value | Behavior |
+|-------|----------|
+| `.automatic` | System decides resize behavior |
+| `.contentSize` | Fixed to content size; no user resize; zoom button disabled |
+| `.contentMinSize` | Resizable with minimum based on content's `minWidth`/`minHeight` |
+
+**`defaultPosition` options:** `.center`, `.topLeading`, `.top`, `.topTrailing`, `.leading`, `.trailing`, `.bottomLeading`, `.bottom`, `.bottomTrailing`
+
 **Guidelines:**
-- Prefer setting `minWidth`/`minHeight` via `.frame()` on content for predictable layout
-- Use `.windowResizability(.contentMinSize)` to enforce those minimums
+- Set `minWidth`/`minHeight` via `.frame()` on content, enforce with `.contentMinSize`
 - Use `.defaultSize()` for initial dimensions (larger than minimums)
-- Use `.defaultPosition(.center)` for centered initial placement
+- `defaultSize` also accepts `CGSize`
+
+### windowIdealPlacement (macOS 15.0+)
+
+For precise programmatic positioning, use a closure with display geometry:
+
+```swift
+.windowIdealPlacement { context in
+    let screen = context.defaultDisplay.visibleArea
+    return WindowPlacement(x: screen.midX, y: screen.midY,
+                           width: screen.width / 2, height: screen.height)
+}
+```
 
 ---
 
@@ -243,45 +192,18 @@ MenuBarExtra("Status", systemImage: "chart.bar") {
 On macOS, `NavigationSplitView` displays columns side-by-side (never overlaid). The sidebar gets a translucent material background. Columns support variable-width resizing by the user.
 
 ```swift
-struct ContentView: View {
-    @State private var departmentId: Department.ID?
-    @State private var employeeIds = Set<Employee.ID>()
-
-    var body: some View {
-        NavigationSplitView {
-            // Sidebar — translucent material on macOS
-            List(model.departments, selection: $departmentId) { dept in
-                Text(dept.name)
-            }
-            .navigationSplitViewColumnWidth(min: 180, ideal: 220, max: 300)
-        } content: {
-            // Content column
-            if let department = model.department(id: departmentId) {
-                List(department.employees, selection: $employeeIds) { emp in
-                    Text(emp.name)
-                }
-            } else {
-                Text("Select a department")
-            }
-        } detail: {
-            EmployeeDetails(for: employeeIds)
-        }
-        .navigationSplitViewStyle(.balanced)
-    }
-}
-```
-
-### Column width customization
-
-```swift
 NavigationSplitView {
-    SidebarView()
-        .navigationSplitViewColumnWidth(min: 180, ideal: 220, max: 300)
+    List(items, selection: $selectedId) { item in
+        Text(item.name)
+    }
+    .navigationSplitViewColumnWidth(min: 180, ideal: 220, max: 300)
 } detail: {
-    DetailView()
-        .navigationSplitViewColumnWidth(min: 400, ideal: 600)
+    DetailView(id: selectedId)
 }
+.navigationSplitViewStyle(.balanced)
 ```
+
+Use the three-column variant (`sidebar` / `content` / `detail`) for master-detail-detail layouts. Customize column widths with `.navigationSplitViewColumnWidth(min:ideal:max:)`.
 
 ### Inspector (macOS 14.0+)
 
@@ -319,45 +241,18 @@ struct ContentView: View {
 Define menu bar commands. On macOS, these populate the menu bar directly. On iOS, they create key commands.
 
 ```swift
-@main
-struct MyApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
-        .commands {
-            // Add a new top-level menu (appears between View and Window)
-            CommandMenu("Tools") {
-                Button("Run Analysis") {
-                    // action
-                }
-                .keyboardShortcut("r", modifiers: [.command, .shift])
-
-                Divider()
-
-                Button("Clear Cache") {
-                    // action
-                }
-            }
-
-            // Replace existing Help menu content
-            CommandGroup(replacing: .help) {
-                Button("My App Help") {
-                    // open help
-                }
-            }
-
-            // Add items after the "New" group in File menu
-            CommandGroup(after: .newItem) {
-                Button("New From Template...") {
-                    // action
-                }
-                .keyboardShortcut("n", modifiers: [.command, .shift])
-            }
-        }
+.commands {
+    CommandMenu("Tools") {
+        Button("Run Analysis") { /* ... */ }
+            .keyboardShortcut("r", modifiers: [.command, .shift])
+    }
+    CommandGroup(after: .newItem) {
+        Button("New From Template...") { /* ... */ }
     }
 }
 ```
+
+**`CommandGroup` placement options:** `.replacing(_:)` replaces a system group, `.before(_:)` / `.after(_:)` inserts adjacent to it. Common placements: `.newItem`, `.saveItem`, `.help`, `.toolbar`, `.sidebar`.
 
 ### KeyboardShortcut
 

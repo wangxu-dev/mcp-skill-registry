@@ -1,5 +1,16 @@
 # SwiftUI List Patterns Reference
 
+## Table of Contents
+
+- [ForEach Identity and Stability](#foreach-identity-and-stability)
+- [Enumerated Sequences](#enumerated-sequences)
+- [List with Custom Styling](#list-with-custom-styling)
+- [List with Pull-to-Refresh](#list-with-pull-to-refresh)
+- [Empty States with ContentUnavailableView (iOS 17+)](#empty-states-with-contentunavailableview-ios-17)
+- [Custom List Backgrounds](#custom-list-backgrounds)
+- [Table](#table)
+- [Summary Checklist](#summary-checklist)
+
 ## ForEach Identity and Stability
 
 **Always provide stable identity for `ForEach`.** Never use `.indices` for dynamic content.

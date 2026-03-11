@@ -2,6 +2,18 @@
 
 > SwiftUI scene types for macOS apps — `Settings`, `MenuBarExtra`, `WindowGroup`, `Window`, `UtilityWindow`, and `DocumentGroup`. Covers macOS-only scenes and cross-platform scenes with macOS-specific behavior.
 
+## Table of Contents
+
+- [Quick Lookup Table](#quick-lookup-table)
+- [Settings (macOS-only)](#settings-macos-only)
+- [MenuBarExtra (macOS-only)](#menubarextra-macos-only)
+- [WindowGroup (macOS behavior)](#windowgroup-macos-behavior)
+- [Window](#window)
+- [UtilityWindow (macOS-only)](#utilitywindow-macos-only)
+- [DocumentGroup](#documentgroup)
+- [Platform Conditionals](#platform-conditionals)
+- [Best Practices](#best-practices)
+
 ---
 
 ## Quick Lookup Table
@@ -22,49 +34,17 @@
 Presents the app's preferences window, accessible via **Cmd+,** or the app menu. SwiftUI automatically enables the Settings menu item and manages the window lifecycle.
 
 ```swift
-@main
-struct MyApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
-        #if os(macOS)
-        Settings {
-            SettingsView()
-        }
-        #endif
+Settings {
+    TabView {
+        Tab("General", systemImage: "gear") { GeneralSettingsView() }
+        Tab("Advanced", systemImage: "star") { AdvancedSettingsView() }
     }
-}
-
-struct SettingsView: View {
-    var body: some View {
-        TabView {
-            Tab("General", systemImage: "gear") {
-                GeneralSettingsView()
-            }
-            Tab("Advanced", systemImage: "star") {
-                AdvancedSettingsView()
-            }
-        }
-        .scenePadding()
-        .frame(maxWidth: 350, minHeight: 100)
-    }
-}
-
-struct GeneralSettingsView: View {
-    @AppStorage("showPreview") private var showPreview = true
-    @AppStorage("fontSize") private var fontSize = 12.0
-
-    var body: some View {
-        Form {
-            Toggle("Show Previews", isOn: $showPreview)
-            Slider(value: $fontSize, in: 9...96) {
-                Text("Font Size (\(fontSize, specifier: "%.0f") pts)")
-            }
-        }
-    }
+    .scenePadding()
+    .frame(maxWidth: 350, minHeight: 100)
 }
 ```
+
+Use `TabView` with `Tab` items for multi-pane preferences. Each tab's content is typically a `Form` with `@AppStorage`-backed controls.
 
 ### SettingsLink (macOS 14.0+)
 
@@ -107,84 +87,27 @@ Renders a persistent control in the system menu bar. Two styles available:
 ### Menu-style (dropdown)
 
 ```swift
-@main
-struct UtilityApp: App {
-    var body: some Scene {
-        MenuBarExtra("My Utility", systemImage: "hammer") {
-            Button("Action One") { /* ... */ }
-            Button("Action Two") { /* ... */ }
-            Divider()
-            Button("Quit") {
-                NSApplication.shared.terminate(nil)
-            }
-        }
-    }
+MenuBarExtra("My Utility", systemImage: "hammer") {
+    Button("Action One") { /* ... */ }
+    Button("Action Two") { /* ... */ }
+    Divider()
+    Button("Quit") { NSApplication.shared.terminate(nil) }
 }
 ```
 
 ### Window-style (popover panel)
 
 ```swift
-@main
-struct StatusApp: App {
-    var body: some Scene {
-        MenuBarExtra("Status", systemImage: "chart.bar") {
-            VStack(spacing: 12) {
-                Text("System Status")
-                    .font(.headline)
-                ProgressView(value: 0.7)
-                    .progressViewStyle(.linear)
-                Button("Refresh") { /* ... */ }
-            }
-            .padding()
-            .frame(width: 240)
-        }
-        .menuBarExtraStyle(.window)
-    }
+MenuBarExtra("Status", systemImage: "chart.bar") {
+    DashboardView()
+        .frame(width: 240)
 }
+.menuBarExtraStyle(.window)
 ```
 
-### Toggleable menu bar extra
-
-```swift
-@main
-struct AppWithMenuBarExtra: App {
-    @AppStorage("showMenuBarExtra") private var showMenuBarExtra = true
-
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
-        MenuBarExtra(
-            "App Menu Bar Extra", systemImage: "star",
-            isInserted: $showMenuBarExtra
-        ) {
-            StatusMenu()
-        }
-    }
-}
-```
-
-### Menu-bar-only app pattern
-
-For utility apps that only live in the menu bar with no Dock icon:
-
-```swift
-@main
-struct MenuBarOnlyApp: App {
-    var body: some Scene {
-        MenuBarExtra("My Utility", systemImage: "gear") {
-            VStack {
-                DashboardView()
-            }
-            .frame(width: 300, height: 400)
-        }
-        .menuBarExtraStyle(.window)
-    }
-}
-```
-
-> **Tip:** Set `LSUIElement = true` in Info.plist to hide the Dock icon and app switcher entry. The app auto-terminates if the user removes the extra from the menu bar.
+**Variations:**
+- **Toggleable** — pass `isInserted:` with an `@AppStorage` binding to let users show/hide the extra: `MenuBarExtra("Status", systemImage: "chart.bar", isInserted: $showMenuBarExtra)`
+- **Menu-bar-only app** — use `MenuBarExtra` as the sole scene + set `LSUIElement = true` in Info.plist to hide the Dock icon. The app auto-terminates if the user removes the extra from the menu bar.
 
 ---
 
@@ -332,48 +255,28 @@ Document-based apps with automatic file management. On macOS, provides:
 - On iOS, shows a document browser instead
 
 ```swift
-@main
-struct TextEditorApp: App {
-    var body: some Scene {
-        DocumentGroup(newDocument: TextFile()) { configuration in
-            ContentView(document: configuration.$document)
-        }
-    }
+DocumentGroup(newDocument: TextFile()) { config in
+    ContentView(document: config.$document)
 }
+```
 
+The document type must conform to `FileDocument` (value type) or `ReferenceFileDocument` (reference type). Key requirements:
+
+```swift
 struct TextFile: FileDocument {
     static var readableContentTypes: [UTType] { [.plainText] }
     var text: String = ""
-
     init() {}
-
     init(configuration: ReadConfiguration) throws {
-        if let data = configuration.file.regularFileContents {
-            text = String(data: data, encoding: .utf8) ?? ""
-        }
+        text = String(data: configuration.file.regularFileContents ?? Data(), encoding: .utf8) ?? ""
     }
-
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
         FileWrapper(regularFileWithContents: Data(text.utf8))
     }
 }
 ```
 
-### Multiple document types
-
-```swift
-@main
-struct MyApp: App {
-    var body: some Scene {
-        DocumentGroup(newDocument: TextFile()) { group in
-            ContentView(document: group.$document)
-        }
-        DocumentGroup(viewing: MyImageFormatDocument.self) { group in
-            MyImageFormatViewer(image: group.document)
-        }
-    }
-}
-```
+For multiple document types, add additional `DocumentGroup` scenes — use `DocumentGroup(viewing:)` for read-only formats.
 
 ---
 

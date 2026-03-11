@@ -1,5 +1,13 @@
 # SwiftUI Image Optimization Reference
 
+## Table of Contents
+
+- [AsyncImage Best Practices](#asyncimage-best-practices)
+- [Image Decoding and Downsampling (Optional Optimization)](#image-decoding-and-downsampling-optional-optimization)
+- [UIImage Loading and Memory](#uiimage-loading-and-memory)
+- [SF Symbols](#sf-symbols)
+- [Summary Checklist](#summary-checklist)
+
 ## AsyncImage Best Practices
 
 ### Basic AsyncImage with Phase Handling
@@ -24,59 +32,7 @@ AsyncImage(url: imageURL) { phase in
 .frame(width: 200, height: 200)
 ```
 
-### AsyncImage with Custom Placeholder
-
-```swift
-struct ImageView: View {
-    let url: URL?
-    
-    var body: some View {
-        AsyncImage(url: url) { phase in
-            switch phase {
-            case .empty:
-                ZStack {
-                    Color.gray.opacity(0.2)
-                    ProgressView()
-                }
-            case .success(let image):
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case .failure:
-                ZStack {
-                    Color.gray.opacity(0.2)
-                    Image(systemName: "exclamationmark.triangle")
-                        .foregroundStyle(.secondary)
-                }
-            @unknown default:
-                EmptyView()
-            }
-        }
-        .clipShape(.rect(cornerRadius: 12))
-    }
-}
-```
-
-### AsyncImage with Transition
-
-```swift
-AsyncImage(url: imageURL) { phase in
-    switch phase {
-    case .empty:
-        ProgressView()
-    case .success(let image):
-        image
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .transition(.opacity)
-    case .failure:
-        Image(systemName: "photo")
-    @unknown default:
-        EmptyView()
-    }
-}
-.animation(.easeInOut, value: imageURL)
-```
+For custom placeholders, replace `ProgressView()` in the `.empty` case with your placeholder view. Add `.transition(.opacity)` to the success case and `.animation(.easeInOut, value: imageURL)` to the container for fade-in transitions.
 
 ## Image Decoding and Downsampling (Optional Optimization)
 
@@ -145,56 +101,30 @@ OptimizedImageView(
 )
 ```
 
-### Reusable Image Downsampling Helper
+### Reusable Downsampling Actor
+
+For production use, wrap the logic in an `actor` with scale-aware sizing and cache-disabled source options:
 
 ```swift
 actor ImageProcessor {
-    func downsample(data: Data, to targetSize: CGSize) -> UIImage? {
-        guard let source = CGImageSourceCreateWithData(data as CFData, nil) else {
-            return nil
-        }
-        
-        let maxDimension = max(targetSize.width, targetSize.height) * UIScreen.main.scale
-        
-        let options: [CFString: Any] = [
-            kCGImageSourceThumbnailMaxPixelSize: maxDimension,
+    func downsample(data: Data, targetSize: CGSize) -> UIImage? {
+        let scale = await UIScreen.main.scale
+        let maxPixel = max(targetSize.width, targetSize.height) * scale
+        let sourceOptions: [CFString: Any] = [kCGImageSourceShouldCache: false]
+        guard let source = CGImageSourceCreateWithData(data as CFData, sourceOptions as CFDictionary) else { return nil }
+        let downsampleOptions: [CFString: Any] = [
             kCGImageSourceCreateThumbnailFromImageAlways: true,
+            kCGImageSourceThumbnailMaxPixelSize: maxPixel,
             kCGImageSourceCreateThumbnailWithTransform: true,
-            kCGImageSourceShouldCache: false
+            kCGImageSourceShouldCacheImmediately: true
         ]
-        
-        guard let cgImage = CGImageSourceCreateThumbnailAtIndex(source, 0, options as CFDictionary) else {
-            return nil
-        }
-        
+        guard let cgImage = CGImageSourceCreateThumbnailAtIndex(source, 0, downsampleOptions as CFDictionary) else { return nil }
         return UIImage(cgImage: cgImage)
     }
 }
-
-// Usage in view
-struct ImageView: View {
-    let imageData: Data
-    let targetSize: CGSize
-    @State private var image: UIImage?
-    
-    private let processor = ImageProcessor()
-    
-    var body: some View {
-        Group {
-            if let image {
-                Image(uiImage: image)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-            } else {
-                ProgressView()
-            }
-        }
-        .task {
-            image = await processor.downsample(data: imageData, to: targetSize)
-        }
-    }
-}
 ```
+
+Key details: `kCGImageSourceShouldCache: false` on the source prevents the full-resolution image from being cached in memory. Multiplying `targetSize` by `UIScreen.main.scale` ensures the thumbnail is sharp on Retina displays. `kCGImageSourceShouldCacheImmediately: true` on the thumbnail forces decoding at creation time rather than at first render.
 
 ### When to Suggest This Optimization
 
@@ -248,39 +178,17 @@ struct ImageCache {
 
 ## SF Symbols
 
-### Using SF Symbols
-
 ```swift
-// Basic symbol
 Image(systemName: "star.fill")
     .foregroundStyle(.yellow)
-
-// With rendering mode
-Image(systemName: "heart.fill")
-    .symbolRenderingMode(.multicolor)
-
-// With variable color
-Image(systemName: "speaker.wave.3.fill")
-    .symbolRenderingMode(.hierarchical)
-    .foregroundStyle(.blue)
+    .symbolRenderingMode(.multicolor)     // or .hierarchical, .palette, .monochrome
 
 // Animated symbols (iOS 17+)
 Image(systemName: "antenna.radiowaves.left.and.right")
     .symbolEffect(.variableColor)
 ```
 
-### SF Symbol Variants
-
-```swift
-// Circle variant
-Image(systemName: "star.circle.fill")
-
-// Square variant
-Image(systemName: "star.square.fill")
-
-// With badge
-Image(systemName: "folder.badge.plus")
-```
+Variants are available via naming convention: `star.circle.fill`, `star.square.fill`, `folder.badge.plus`.
 
 ## Summary Checklist
 

@@ -1,5 +1,14 @@
 # SwiftUI Accessibility Patterns Reference
 
+## Table of Contents
+
+- [Core Principle](#core-principle)
+- [Dynamic Type with @ScaledMetric](#dynamic-type-with-scaledmetric)
+- [Accessibility Traits](#accessibility-traits)
+- [Element Grouping](#element-grouping)
+- [Custom Controls](#custom-controls)
+- [Summary Checklist](#summary-checklist)
+
 ## Core Principle
 
 Prefer `Button` over `onTapGesture` for tappable elements. `Button` provides VoiceOver support, focus handling, and proper traits for free.
