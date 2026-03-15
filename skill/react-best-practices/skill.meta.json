@@ -3,6 +3,6 @@
   "description": "React and Next.js performance optimization guidelines from Vercel Engineering. This skill should be used when writing, reviewing, or refactoring React/Next.js code to ensure optimal performance patterns. Triggers on tasks involving React components, Next.js pages, data fetching, bundle optimization, or performance improvements.",
   "version": "1.0.0",
   "head": "5847a7c7e79bab3e400cf47800b83449d7aea2d4",
-  "updatedAt": "2026-03-14T04:15:44Z",
-  "checkedAt": "2026-03-14T04:15:44Z"
+  "updatedAt": "2026-03-15T04:37:24Z",
+  "checkedAt": "2026-03-15T04:37:24Z"
 }

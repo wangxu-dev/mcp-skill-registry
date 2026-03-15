@@ -2,6 +2,6 @@
   "name": "emailAndPassword",
   "description": "Configure email verification, implement password reset flows, set password policies, and customise hashing algorithms for Better Auth email/password authentication. Use when users need to set up login, sign-in, sign-up, credential authentication, or password security with Better Auth.",
   "head": "6a1636950a1d7fc53602639ce7505a4a5d39c797",
-  "updatedAt": "2026-03-14T04:15:44Z",
-  "checkedAt": "2026-03-14T04:15:44Z"
+  "updatedAt": "2026-03-15T04:37:24Z",
+  "checkedAt": "2026-03-15T04:37:24Z"
 }
