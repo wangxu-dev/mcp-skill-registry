@@ -2,6 +2,6 @@
   "name": "organization",
   "description": "Configure multi-tenant organizations, manage members and invitations, define custom roles and permissions, set up teams, and implement RBAC using Better Auth's organization plugin. Use when users need org setup, team management, member roles, access control, or the Better Auth organization plugin.",
   "head": "6a1636950a1d7fc53602639ce7505a4a5d39c797",
-  "updatedAt": "2026-03-16T04:44:57Z",
-  "checkedAt": "2026-03-16T04:44:57Z"
+  "updatedAt": "2026-03-17T04:23:50Z",
+  "checkedAt": "2026-03-17T04:23:50Z"
 }
