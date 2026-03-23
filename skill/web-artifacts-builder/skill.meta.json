@@ -1,7 +1,7 @@
 {
   "name": "web-artifacts-builder",
   "description": "Suite of tools for creating elaborate, multi-component claude.ai HTML artifacts using modern frontend web technologies (React, Tailwind CSS, shadcn/ui). Use for complex artifacts requiring state management, routing, or shadcn/ui components - not for simple single-file HTML/JSX artifacts.",
-  "head": "b0cbd3df1533b396d281a6886d5132f623393a9c",
-  "updatedAt": "2026-03-22T04:25:13Z",
-  "checkedAt": "2026-03-22T04:25:13Z"
+  "head": "887114fd09f8f24a7e6c907f9ee505348498ab6a",
+  "updatedAt": "2026-03-23T04:34:03Z",
+  "checkedAt": "2026-03-23T04:34:03Z"
 }
