@@ -2,7 +2,7 @@
   "name": "web-design-guidelines",
   "description": "Review UI code for Web Interface Guidelines compliance. Use when asked to \"review my UI\", \"check accessibility\", \"audit design\", \"review UX\", or \"check my site against best practices\".",
   "version": "1.0.0",
-  "head": "9aec8ee6aaf702e49312a071e672f1c1b7b7e948",
-  "updatedAt": "2026-03-24T04:24:32Z",
-  "checkedAt": "2026-03-24T04:24:32Z"
+  "head": "64484e9a6022c81e3af59f5dcee6fb6d631bf53e",
+  "updatedAt": "2026-03-25T04:25:50Z",
+  "checkedAt": "2026-03-25T04:25:50Z"
 }
