@@ -2,6 +2,6 @@
   "name": "pptx",
   "description": "Use this skill any time a .pptx file is involved in any way — as input, output, or both. This includes: creating slide decks, pitch decks, or presentations; reading, parsing, or extracting text from any .pptx file (even if the extracted content will be used elsewhere, like in an email or summary); editing, modifying, or updating existing presentations; combining or splitting slide files; working with templates, layouts, speaker notes, or comments. Trigger whenever the user mentions \\\"deck,\\\" \\\"slides,\\\" \\\"presentation,\\\" or references a .pptx filename, regardless of what they plan to do with the content afterward. If a .pptx file needs to be opened, created, or touched, use this skill.",
   "head": "98669c11ca63e9c81c11501e1437e5c47b556621",
-  "updatedAt": "2026-04-04T04:23:26Z",
-  "checkedAt": "2026-04-04T04:23:26Z"
+  "updatedAt": "2026-04-05T04:42:08Z",
+  "checkedAt": "2026-04-05T04:42:08Z"
 }
