@@ -2,6 +2,6 @@
   "name": "twoFactor",
   "description": "Configure TOTP authenticator apps, send OTP codes via email/SMS, manage backup codes, handle trusted devices, and implement 2FA sign-in flows using Better Auth's twoFactor plugin. Use when users need MFA, multi-factor authentication, authenticator setup, or login security with Better Auth.",
   "head": "6a1636950a1d7fc53602639ce7505a4a5d39c797",
-  "updatedAt": "2026-04-10T04:51:58Z",
-  "checkedAt": "2026-04-10T04:51:58Z"
+  "updatedAt": "2026-04-11T04:26:46Z",
+  "checkedAt": "2026-04-11T04:26:46Z"
 }
