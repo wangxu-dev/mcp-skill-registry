@@ -3,6 +3,6 @@
   "description": "Deploy applications and websites to Vercel. Use when the user requests deployment actions like \"deploy my app\", \"deploy and give me the link\", \"push this live\", or \"create a preview deployment\".",
   "version": "3.0.0",
   "head": "73140fc5b3a214ad3222bcf557b397b3c02d11c1",
-  "updatedAt": "2026-04-13T05:19:36Z",
-  "checkedAt": "2026-04-13T05:19:36Z"
+  "updatedAt": "2026-04-14T04:50:05Z",
+  "checkedAt": "2026-04-14T04:50:05Z"
 }
