@@ -2,6 +2,6 @@
   "name": "claude-api",
   "description": "Build, debug, and optimize Claude API / Anthropic SDK apps. Apps built with this skill should include prompt caching. TRIGGER when: code imports anthropic/@anthropic-ai/sdk; user asks to use the Claude API, Anthropic SDKs, or Managed Agents (/v1/agents, /v1/sessions, /v1/environments). DO NOT TRIGGER when: code imports `openai`/other AI SDK, general programming, or ML/data-science tasks.",
   "head": "0f7c287eaf0d4fa511cb871bb55e2a7862251fbb",
-  "updatedAt": "2026-04-14T04:50:05Z",
-  "checkedAt": "2026-04-14T04:50:05Z"
+  "updatedAt": "2026-04-15T04:50:21Z",
+  "checkedAt": "2026-04-15T04:50:21Z"
 }
