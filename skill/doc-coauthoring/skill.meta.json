@@ -1,7 +1,7 @@
 {
   "name": "doc-coauthoring",
   "description": "Guide users through a structured workflow for co-authoring documentation. Use when user wants to write documentation, proposals, technical specs, decision docs, or similar structured content. This workflow helps users efficiently transfer context, refine content through iteration, and verify the doc works for readers. Trigger when user mentions writing docs, creating proposals, drafting specs, or similar documentation tasks.",
-  "head": "0f7c287eaf0d4fa511cb871bb55e2a7862251fbb",
-  "updatedAt": "2026-04-16T04:55:38Z",
-  "checkedAt": "2026-04-16T04:55:38Z"
+  "head": "2c7ec5e78b8e5d43ea02e90bb8826f6b9f147b0c",
+  "updatedAt": "2026-04-17T04:53:49Z",
+  "checkedAt": "2026-04-17T04:53:49Z"
 }

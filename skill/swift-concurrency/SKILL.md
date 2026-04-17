@@ -11,7 +11,7 @@ Before proposing a fix:
 1. Analyze `Package.swift` or `.pbxproj` to determine Swift language mode, strict concurrency level, default isolation, and upcoming features. Do this always, not only for migration work.
 2. Capture the exact diagnostic and offending symbol.
 3. Determine the isolation boundary: `@MainActor`, custom actor, actor instance isolation, or `nonisolated`.
-4. Confirm whether the code is UI-bound or intended to run off the main actor.
+4. Confirm whether the code is UI-bound or intended to run off the main actor. For delayed retries, timers, and backoff tasks, separate the waiting from the UI mutation. The sleep often belongs off the main actor even when the final state update belongs on it.
 
 Project settings that change concurrency behavior:
 
@@ -72,7 +72,7 @@ Prefer changes that preserve behavior while satisfying data-race safety:
 
 - **UI-bound state**: isolate the type or member to `@MainActor`.
 - **Shared mutable state**: move it behind an `actor`, or use `@MainActor` only if the state is UI-owned.
-- **Background work**: when work must hop off caller isolation, use an `async` API marked `@concurrent`; when work can safely inherit caller isolation, use `nonisolated` without `@concurrent`.
+- **Background work**: when work must hop off caller isolation, use an `async` API marked `@concurrent`; when work can safely inherit caller isolation, use `nonisolated` without `@concurrent`. If a task mostly waits or retries before one UI-bound mutation, keep the delay off `@MainActor` and hop back only for the final update.
 - **Sendability issues**: prefer immutable values and explicit boundaries over `@unchecked Sendable`.
 
 ## Concurrency Tool Selection
