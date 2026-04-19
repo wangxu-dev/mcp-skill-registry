@@ -2,6 +2,6 @@
   "name": "pdf",
   "description": "Use this skill whenever the user wants to do anything with PDF files. This includes reading or extracting text/tables from PDFs, combining or merging multiple PDFs into one, splitting PDFs apart, rotating pages, adding watermarks, creating new PDFs, filling PDF forms, encrypting/decrypting PDFs, extracting images, and OCR on scanned PDFs to make them searchable. If the user mentions a .pdf file or asks to produce one, use this skill.",
   "head": "2c7ec5e78b8e5d43ea02e90bb8826f6b9f147b0c",
-  "updatedAt": "2026-04-18T04:37:23Z",
-  "checkedAt": "2026-04-18T04:37:23Z"
+  "updatedAt": "2026-04-19T04:55:23Z",
+  "checkedAt": "2026-04-19T04:55:23Z"
 }

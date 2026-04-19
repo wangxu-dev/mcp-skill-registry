@@ -2,6 +2,6 @@
   "name": "create-auth",
   "description": "Scaffold and implement authentication in TypeScript/JavaScript apps using Better Auth. Detect frameworks, configure database adapters, set up route handlers, add OAuth providers, and create auth UI pages. Use when users want to add login, sign-up, or authentication to a new or existing project with Better Auth.",
   "head": "6a1636950a1d7fc53602639ce7505a4a5d39c797",
-  "updatedAt": "2026-04-18T04:37:23Z",
-  "checkedAt": "2026-04-18T04:37:23Z"
+  "updatedAt": "2026-04-19T04:55:23Z",
+  "checkedAt": "2026-04-19T04:55:23Z"
 }
