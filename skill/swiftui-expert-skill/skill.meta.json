@@ -2,6 +2,6 @@
   "name": "swiftui-expert-skill",
   "description": "Use when writing, reviewing, or refactoring SwiftUI code for iOS or macOS, including state management and `@Observable` data flow, view composition and invalidation/performance, lists and `ForEach` identity, environment usage, localization, animations, Liquid Glass adoption, migrating soft-deprecated APIs, or Instruments `.trace` capture/analysis for hangs, hitches, CPU hotspots, or",
   "head": "4c6a97d15aa5e023538c3cb06b5192f241dd451d",
-  "updatedAt": "2026-09-06T07:02:06Z",
-  "checkedAt": "2026-09-06T07:02:06Z"
+  "updatedAt": "2026-09-07T07:13:33Z",
+  "checkedAt": "2026-09-07T07:13:33Z"
 }
